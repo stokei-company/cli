@@ -1,0 +1,9 @@
+<% props.tables.forEach(function(table){ %>
+import { <%= props.table.pascalCaseSingularName %>CommandHandlers } from './<%= props.table.kebabCasePluralName %>';
+<% }); %>
+
+export const CommandHandlers = [
+  <% props.tables.forEach(function(table){ %>
+  ...<%= props.table.pascalCaseSingularName %>CommandHandlers,
+  <% }); %>
+];

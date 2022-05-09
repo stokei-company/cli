@@ -1,0 +1,67 @@
+import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { Update<%= props.pascalCaseSingularName %>Command } from '@/commands/implements/<%= props.kebabCasePluralName %>/update-<%= props.kebabCasePluralName %>.command';
+import {
+  <%= props.pascalCaseSingularName %>NotFoundException,
+  DataNotFoundException,
+  ErrorUpdatingPasswordException,
+  ParamNotFoundException
+} from '@/errors';
+import { Find<%= props.pascalCaseSingularName %>ByIdRepository } from '@/repositories/<%= props.kebabCasePluralName %>/find-<%= props.kebabCasePluralName %>-by-id';
+import { Update<%= props.pascalCaseSingularName %>Repository } from '@/repositories/<%= props.kebabCasePluralName %>/update-<%= props.kebabCasePluralName %>';
+import { cleanValue } from '@stokei/nestjs';
+
+type Update<%= props.pascalCaseSingularName %>CommandKeys = keyof Update<%= props.pascalCaseSingularName %>Command;
+
+@CommandHandler(Update<%= props.pascalCaseSingularName %>Command)
+export class Update<%= props.pascalCaseSingularName %>CommandHandler
+  implements ICommandHandler<Update<%= props.pascalCaseSingularName %>Command>
+{
+  constructor(
+    private readonly find<%= props.pascalCaseSingularName %>ByIdRepository: Find<%= props.pascalCaseSingularName %>ByIdRepository,
+    private readonly update<%= props.pascalCaseSingularName %>Repository: Update<%= props.pascalCaseSingularName %>Repository,
+    private readonly publisher: EventPublisher
+  ) {}
+
+  async execute(command: Update<%= props.pascalCaseSingularName %>Command) {
+    if (!command) {
+      throw new DataNotFoundException();
+    }
+
+    const data = this.clearData(command);
+
+    if (!data.<%= props.camelCaseSingularName %>Id) {
+      throw new ParamNotFoundException<Update<%= props.pascalCaseSingularName %>CommandKeys>('<%= props.camelCaseSingularName %>Id');
+    }
+
+    const <%= props.camelCaseSingularName %> = await this.find<%= props.pascalCaseSingularName %>ByIdRepository.execute(data.<%= props.camelCaseSingularName %>Id);
+    if (!<%= props.camelCaseSingularName %>) {
+      throw new <%= props.pascalCaseSingularName %>NotFoundException();
+    }
+
+    const updated = await this.update<%= props.pascalCaseSingularName %>Repository.execute({
+      <%= props.camelCaseSingularName %>Id: <%= props.camelCaseSingularName %>.id,
+      data: {},
+    });
+    if (!updated) {
+      throw new ErrorUpdatingPasswordException();
+    }
+
+    const <%= props.camelCaseSingularName %>Updated = await this.find<%= props.pascalCaseSingularName %>ByIdRepository.execute(
+      <%= props.camelCaseSingularName %>.id
+    );
+    if (!<%= props.camelCaseSingularName %>Updated) {
+      throw new <%= props.pascalCaseSingularName %>NotFoundException();
+    }
+    const <%= props.camelCaseSingularName %>Model = this.publisher.mergeObjectContext(<%= props.camelCaseSingularName %>Updated);
+    <%= props.camelCaseSingularName %>Model.updated();
+    <%= props.camelCaseSingularName %>Model.commit();
+
+    return updated;
+  }
+
+  private clearData(command: Update<%= props.pascalCaseSingularName %>Command): Update<%= props.pascalCaseSingularName %>Command {
+    command.<%= props.camelCaseSingularName %>Id = cleanValue(command.<%= props.camelCaseSingularName %>Id);
+    command.data = {};
+    return command;
+  }
+}

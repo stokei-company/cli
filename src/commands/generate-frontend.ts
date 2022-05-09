@@ -1,8 +1,10 @@
 import { GluegunCommand } from 'gluegun';
+import { Toolbox } from '../interfaces/toolbox.interface';
 
 const command: GluegunCommand = {
   name: 'generate:frontend',
-  run: async (toolbox) => {
+  alias: ['gfront'],
+  run: async (toolbox: Toolbox) => {
     const { print } = toolbox;
 
     print.error('Command is not working!');
