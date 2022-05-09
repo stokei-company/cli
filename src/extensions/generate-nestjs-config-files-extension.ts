@@ -1,5 +1,10 @@
 import { exit } from 'process';
-import { getBaseProjectPath } from '../constants/paths';
+import {
+  getBaseProjectGithubWorkflowsPath,
+  getBaseProjectPath,
+  getBaseProjectSrcPath,
+  getBaseProjectTestPath
+} from '../constants/paths';
 import { GenerateNestJSConfig } from '../interfaces/generate-command.interface';
 import { Toolbox } from '../interfaces/toolbox.interface';
 
@@ -11,6 +16,15 @@ module.exports = (toolbox: Toolbox) => {
 
     try {
       const baseProjectPath = getBaseProjectPath(
+        projectName.kebabCasePluralName
+      );
+      const baseProjectTestPath = getBaseProjectTestPath(
+        projectName.kebabCasePluralName
+      );
+      const baseProjectSrcPath = getBaseProjectSrcPath(
+        projectName.kebabCasePluralName
+      );
+      const baseProjectGithubWorkgflowsPath = getBaseProjectGithubWorkflowsPath(
         projectName.kebabCasePluralName
       );
 
@@ -49,7 +63,6 @@ module.exports = (toolbox: Toolbox) => {
           projectName
         }
       });
-      console.log({ projectName });
       await template.generate({
         template: 'nestjs/docker-compose.yml.ejs',
         target: `${baseProjectPath}/docker-compose.yml`,
@@ -102,6 +115,58 @@ module.exports = (toolbox: Toolbox) => {
       await template.generate({
         template: 'nestjs/tsconfig.json.ejs',
         target: `${baseProjectPath}/tsconfig.json`,
+        props: {
+          projectName
+        }
+      });
+      await template.generate({
+        template: 'nestjs/tsconfig.json.ejs',
+        target: `${baseProjectPath}/tsconfig.json`,
+        props: {
+          projectName
+        }
+      });
+
+      await template.generate({
+        template: 'nestjs/src/main.module.ts.ejs',
+        target: `${baseProjectSrcPath}/main.module.ts`,
+        props: {
+          projectName
+        }
+      });
+      await template.generate({
+        template: 'nestjs/src/main.ts.ejs',
+        target: `${baseProjectSrcPath}/main.ts`,
+        props: {
+          projectName
+        }
+      });
+
+      await template.generate({
+        template: 'nestjs/.github/workflows/main.yml.ejs',
+        target: `${baseProjectGithubWorkgflowsPath}/main.yml`,
+        props: {
+          projectName
+        }
+      });
+      await template.generate({
+        template: 'nestjs/.github/workflows/release.yml.ejs',
+        target: `${baseProjectGithubWorkgflowsPath}/release.yml`,
+        props: {
+          projectName
+        }
+      });
+
+      await template.generate({
+        template: 'nestjs/test/app.e2e-spec.ts.ejs',
+        target: `${baseProjectTestPath}/app.e2e-spec.ts`,
+        props: {
+          projectName
+        }
+      });
+      await template.generate({
+        template: 'nestjs/test/jest-e2e.json.ejs',
+        target: `${baseProjectTestPath}/jest-e2e.json`,
         props: {
           projectName
         }

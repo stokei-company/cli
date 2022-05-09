@@ -1,0 +1,13 @@
+import { <%= props.table.pascalCaseSingularName %>Entity } from '@/entities';
+import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
+
+export class <%= props.table.pascalCaseSingularName %>Mapper {
+  toModel(<%= props.table.camelCaseSingularName %>: <%= props.table.pascalCaseSingularName %>Entity) {
+    return <%= props.table.camelCaseSingularName %> && new <%= props.table.pascalCaseSingularName %>Model(<%= props.table.camelCaseSingularName %>);
+  }
+  toModels(<%= props.table.camelCasePluralName %>: <%= props.table.pascalCaseSingularName %>Entity[]) {
+    return <%= props.table.camelCasePluralName %>?.length > 0
+      ? <%= props.table.camelCasePluralName %>.map(this.toModel).filter(Boolean)
+      : [];
+  }
+}

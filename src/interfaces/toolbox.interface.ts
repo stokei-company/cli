@@ -1,5 +1,8 @@
 import { GluegunToolbox } from 'gluegun';
-import { GenerateNestJSConfig } from './generate-command.interface';
+import {
+  GenerateNestJSConfig,
+  GenerateNestJSDatabaseConfig
+} from './generate-command.interface';
 import { StringConverted } from './strings.interface';
 import { Table } from './tables.interface';
 
@@ -10,7 +13,7 @@ export interface Toolbox extends GluegunToolbox {
   generateNestJSConfigFiles: (data: GenerateNestJSConfig) => Promise<void>;
   generateNestJSCommands: (data: GenerateNestJSConfig) => Promise<void>;
   generateNestJSControllers: (data: GenerateNestJSConfig) => Promise<void>;
-  generateNestJSDatabese: (data: GenerateNestJSConfig) => Promise<void>;
+  generateNestJSDatabese: (data: GenerateNestJSDatabaseConfig) => Promise<void>;
   generateNestJSDTOs: (data: GenerateNestJSConfig) => Promise<void>;
   generateNestJSEntities: (data: GenerateNestJSConfig) => Promise<void>;
   generateNestJSEnums: (data: GenerateNestJSConfig) => Promise<void>;

@@ -5,8 +5,7 @@ import {
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
-import { AuthModule } from '@stokei/auth';
-import { SharedModule } from '@stokei/shared';
+import { AuthModule } from '@stokei/nestjs';
 import { ApolloServerPluginInlineTraceDisabled } from 'apollo-server-core';
 import { CommandHandlers } from './commands/handlers';
 import { Controllers } from './controllers';
@@ -14,7 +13,7 @@ import { Loaders } from './controllers/graphql/dataloaders';
 import { Resolvers } from './controllers/graphql/resolvers';
 import { DatabaseModule } from './database/database.module';
 import { Entities } from './entities';
-import { IS_PRODUCTION } from './environments';
+import { IS_PRODUCTION, TOKEN_SECRET_KEY } from './environments';
 import { EventsHandlers } from './events/handlers';
 import { QueriesHandlers } from './queries/handlers';
 import { Repositories } from './repositories';
@@ -25,8 +24,7 @@ import { Services } from './services';
   imports: [
     CqrsModule,
     DatabaseModule,
-    SharedModule,
-    AuthModule,
+    AuthModule.forRoot({ secretKey: TOKEN_SECRET_KEY }),
     ...Entities,
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,

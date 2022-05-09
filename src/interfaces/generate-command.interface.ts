@@ -5,3 +5,8 @@ export interface GenerateNestJSConfig {
   projectName: ProjectName;
   table?: Table;
 }
+
+export interface GenerateNestJSDatabaseConfig {
+  projectName: ProjectName;
+  tables: Table[];
+}

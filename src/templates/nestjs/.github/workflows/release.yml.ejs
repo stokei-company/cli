@@ -2,17 +2,14 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [release/*]
 
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: accounts-service
-  KUBERNETES_DEPLOYMENT_NAME: accounts-service-deployment
+  IMAGE_NAME: <%= props.projectName.kebabCasePluralName %>-service
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
-  DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
 jobs:
   CI:
@@ -33,6 +30,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Unit tests
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run test
+        env:
+          CI: true
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -42,7 +48,7 @@ jobs:
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
 
-      - name: Build container image
+      - name: Build and push image
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -50,27 +56,3 @@ jobs:
           tags: |
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-  CD:
-    name: CD
-    needs: [CI]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout main
-        uses: actions/checkout@main
-
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ env.DIGITALOCEAN_ACCESS_TOKEN }}
-
-      - name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig save ${{env.CLUSTER_NAME}}
-
-      - name: Deploy to Kubernetes
-        run: kubectl apply -f ${{ github.workspace }}/k8s -R
-
-      - name: Set image to Kubernetes
-        run: kubectl set image deployment/${{env.KUBERNETES_DEPLOYMENT_NAME}} ${{env.IMAGE_NAME}}=${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-      #- name: Verify deployment
-      #  run: kubectl rollout status deployment/${{env.KUBERNETES_DEPLOYMENT_NAME}}
