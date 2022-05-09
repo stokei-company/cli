@@ -4,15 +4,21 @@ import { Toolbox } from '../interfaces/toolbox.interface';
 module.exports = (toolbox: Toolbox) => {
   toolbox.readProjectName = async () => {
     const {
-      parameters: { first: parametersProjectName },
+      parameters: {
+        first: parametersSingularProjectName,
+        options: { plural: parametersPluralProjectName }
+      },
       prompt,
       print,
       convertString
     } = toolbox;
 
     try {
-      if (parametersProjectName) {
-        return convertString(parametersProjectName);
+      if (parametersSingularProjectName) {
+        return convertString(
+          parametersSingularProjectName,
+          parametersPluralProjectName
+        );
       }
       const { projectName } = await prompt.ask({
         type: 'input',
@@ -23,7 +29,7 @@ module.exports = (toolbox: Toolbox) => {
         print.error('Project name not found!');
         return exit(0);
       }
-      return convertString(projectName);
+      return convertString(projectName, parametersPluralProjectName);
     } catch (error) {
       return exit(0);
     }
