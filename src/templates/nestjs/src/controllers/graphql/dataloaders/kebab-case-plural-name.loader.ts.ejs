@@ -1,0 +1,16 @@
+import { Injectable, Scope } from '@nestjs/common';
+import { FindAccountByIdsService } from '@/services/<%= table.kebabCasePluralName %>/find-all-<%= table.kebabCasePluralName %>';
+import DataLoader from 'dataloader';
+
+@Injectable({ scope: Scope.REQUEST })
+export class <%= table.pascalCasePluralName %>Loader {
+  constructor(private readonly <%= table.camelCasePluralName %>Service: FindAccountByIdsService) {}
+
+  readonly findByIds = new DataLoader(async (<%= table.camelCaseSingularName %>Ids: string[]) => {
+    const <%= table.camelCasePluralName %> = await this.<%= table.camelCasePluralName %>Service.execute(<%= table.camelCaseSingularName %>Ids);
+    const <%= table.camelCasePluralName %>Map = new Map(
+      <%= table.camelCasePluralName %>.map((<%= table.camelCaseSingularName %>) => [<%= table.camelCaseSingularName %>.id, <%= table.camelCaseSingularName %>])
+    );
+    return <%= table.camelCaseSingularName %>Ids.map((<%= table.camelCaseSingularName %>Id) => <%= table.camelCasePluralName %>Map.get(<%= table.camelCaseSingularName %>Id));
+  });
+}

@@ -8,12 +8,12 @@ datasource db {
 }
 
 <% props.tables.forEach(function(table){ %>
-  model <%= table.pascalCaseSingularName %> {
-    id        String    @id @default(cuid())
-    parent    String    @db.VarChar(255)
-    updatedAt DateTime? @updatedAt @map("updated_at")
-    createdAt DateTime? @default(now()) @map("created_at")
-  
-    @@map("<%= table.snakeCasePluralName %>")
-  }
+model <%= table.pascalCaseSingularName %> {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("<%= table.snakeCasePluralName %>")
+}
 <% }); %>

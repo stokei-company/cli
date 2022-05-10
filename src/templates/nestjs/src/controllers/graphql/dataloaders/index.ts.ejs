@@ -1,0 +1,9 @@
+<% props.tables.forEach(function(table){ %>
+import { <%= table.pascalCasePluralName %>Loader } from './<%= table.kebabCasePluralName %>.loader';
+<% }); %>
+
+export const Loaders = [
+<% props.tables.forEach(function(table){ %>
+    <%= table.pascalCasePluralName %>Loader,
+<% }); %>
+];
