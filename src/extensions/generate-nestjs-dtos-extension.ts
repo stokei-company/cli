@@ -6,22 +6,54 @@ import { Toolbox } from '../interfaces/toolbox.interface';
 module.exports = (toolbox: Toolbox) => {
   toolbox.generateNestJSDTOs = async ({
     projectName,
-    table
+    tables
   }: GenerateNestJSConfig) => {
-    const { template } = toolbox;
-
     try {
       const baseProjectSrcPath = getBaseProjectSrcPath(
         projectName.kebabCasePluralName
       );
 
-      await template.generate({
-        template: 'nestjs/src/mappers/index.ts.ejs',
-        target: `${baseProjectSrcPath}/mappers/${table.kebabCasePluralName}/index.ts`,
-        props: {
-          projectName,
-          table
-        }
+      tables.forEach(async (table) => {
+        await toolbox.template.generate({
+          template: 'nestjs/src/dtos/count.dto.ts.ejs',
+          target: `${baseProjectSrcPath}/dtos/${table.kebabCasePluralName}/count-${table.kebabCasePluralName}.dto.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template: 'nestjs/src/dtos/create.dto.ts.ejs',
+          target: `${baseProjectSrcPath}/dtos/${table.kebabCasePluralName}/create-${table.kebabCaseSingularName}.dto.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template: 'nestjs/src/dtos/exists.dto.ts.ejs',
+          target: `${baseProjectSrcPath}/dtos/${table.kebabCasePluralName}/exists-${table.kebabCasePluralName}.dto.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template: 'nestjs/src/dtos/find-all.dto.ts.ejs',
+          target: `${baseProjectSrcPath}/dtos/${table.kebabCasePluralName}/find-all-${table.kebabCasePluralName}.dto.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template: 'nestjs/src/dtos/update.dto.ts.ejs',
+          target: `${baseProjectSrcPath}/dtos/${table.kebabCasePluralName}/update-${table.kebabCaseSingularName}.dto.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
       });
     } catch (error) {
       toolbox.print.error(error);

@@ -1,0 +1,8 @@
+import { ICommand } from '@nestjs/cqrs';
+import { Remove<%= props.table.pascalCaseSingularName %>DTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/remove-<%= props.table.kebabCaseSingularName %>.dto';
+
+export class Remove<%= props.table.pascalCaseSingularName %>Command implements ICommand, Remove<%= props.table.pascalCaseSingularName %>DTO {
+  constructor(data: Remove<%= props.table.pascalCaseSingularName %>DTO) {
+    Object.assign(this, data);
+  }
+}

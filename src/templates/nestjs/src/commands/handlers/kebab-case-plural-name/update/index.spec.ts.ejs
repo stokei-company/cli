@@ -1,0 +1,34 @@
+import { EventPublisher } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { Update<%= props.table.pascalCaseSingularName %>CommandHandler } from '.';
+
+describe('Update<%= props.table.pascalCaseSingularName %>CommandHandler', () => {
+  let update<%= props.table.pascalCaseSingularName %>CommandHandler: Update<%= props.table.pascalCaseSingularName %>CommandHandler;
+
+  beforeEach(async () => {
+    const moduleRef = await Test.createTestingModule({
+      controllers: [],
+      providers: [
+        Update<%= props.table.pascalCaseSingularName %>CommandHandler,
+        {
+          provide: EventPublisher,
+          useFactory: () => ({
+            mergeObjectContext: jest.fn().mockImplementation(() => ({
+              changedPassword: jest.fn(),
+              commit: jest.fn()
+            }))
+          })
+        }
+      ]
+    }).compile();
+
+    update<%= props.table.pascalCaseSingularName %>CommandHandler = moduleRef.get(Update<%= props.table.pascalCaseSingularName %>CommandHandler);
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should be defined', () => {
+    expect(update<%= props.table.pascalCaseSingularName %>CommandHandler).toBeDefined();
+  });
+});

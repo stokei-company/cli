@@ -1,0 +1,9 @@
+import { Create<%= props.table.pascalCaseSingularName %>CommandHandler } from './create-<%= props.table.kebabCaseSingularName %>';
+import { Remove<%= props.table.pascalCaseSingularName %>CommandHandler } from './remove-<%= props.table.kebabCaseSingularName %>';
+import { Update<%= props.table.pascalCaseSingularName %>CommandHandler } from './update-<%= props.table.kebabCaseSingularName %>';
+
+export const <%= props.table.pascalCaseSingularName %>CommandHandlers = [
+  Create<%= props.table.pascalCaseSingularName %>CommandHandler,
+  Remove<%= props.table.pascalCaseSingularName %>CommandHandler,
+  Update<%= props.table.pascalCaseSingularName %>CommandHandler
+];

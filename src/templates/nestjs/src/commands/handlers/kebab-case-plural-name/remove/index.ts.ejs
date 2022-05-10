@@ -1,0 +1,55 @@
+import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { Remove<%= props.table.pascalCaseSingularName %>Command } from '@/commands/implements/<%= props.table.kebabCasePluralName %>/remove-<%= props.table.kebabCaseSingularName %>.command';
+import {
+  <%= props.table.pascalCaseSingularName %>NotFoundException,
+  DataNotFoundException,
+  ParamNotFoundException
+} from '@/errors';
+import { Find<%= props.table.pascalCaseSingularName %>ByIdRepository } from '@/repositories/<%= props.table.kebabCasePluralName %>/find-<%= props.table.kebabCaseSingularName %>-by-id';
+import { Remove<%= props.table.pascalCaseSingularName %>Repository } from '@/repositories/<%= props.table.kebabCasePluralName %>/remove-<%= props.table.kebabCaseSingularName %>';
+import { cleanObject } from '@stokei/nestjs';
+
+type Remove<%= props.table.pascalCaseSingularName %>CommandKeys = keyof Remove<%= props.table.pascalCaseSingularName %>Command;
+
+@CommandHandler(Remove<%= props.table.pascalCaseSingularName %>Command)
+export class Remove<%= props.table.pascalCaseSingularName %>CommandHandler
+  implements ICommandHandler<Remove<%= props.table.pascalCaseSingularName %>Command>
+{
+  constructor(
+    private readonly find<%= props.table.pascalCaseSingularName %>ByIdRepository: Find<%= props.table.pascalCaseSingularName %>ByIdRepository,
+    private readonly remove<%= props.table.pascalCaseSingularName %>Repository: Remove<%= props.table.pascalCaseSingularName %>Repository,
+    private readonly publisher: EventPublisher
+  ) {}
+
+  async execute(command: Remove<%= props.table.pascalCaseSingularName %>Command) {
+    if (!command) {
+      throw new DataNotFoundException();
+    }
+
+    const data = this.clearData(command);
+
+    const <%= props.table.camelCaseSingularName %> = await this.find<%= props.table.pascalCaseSingularName %>ByIdRepository.execute(null);
+    if (!<%= props.table.camelCaseSingularName %>) {
+      throw new <%= props.table.pascalCaseSingularName %>NotFoundException();
+    }
+
+    const removed = await this.remove<%= props.table.pascalCaseSingularName %>Repository.execute(null);
+    if (!removed) {
+      throw new DataNotFoundException();
+    }
+
+    const <%= props.table.camelCaseSingularName %>Removed = await this.find<%= props.table.pascalCaseSingularName %>ByIdRepository.execute(null);
+    if (!<%= props.table.camelCaseSingularName %>Removed) {
+      throw new <%= props.table.pascalCaseSingularName %>NotFoundException();
+    }
+    const <%= props.table.camelCaseSingularName %>Model = this.publisher.mergeObjectContext(<%= props.table.camelCaseSingularName %>Removed);
+    <%= props.table.camelCaseSingularName %>Model.removed();
+    <%= props.table.camelCaseSingularName %>Model.commit();
+
+    return removed;
+  }
+
+  private clearData(command: Remove<%= props.table.pascalCaseSingularName %>Command): Remove<%= props.table.pascalCaseSingularName %>Command {
+    return cleanObject(command);
+  }
+}

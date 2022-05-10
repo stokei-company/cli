@@ -1,0 +1,8 @@
+import { ICommand } from '@nestjs/cqrs';
+import { Create<%= props.table.pascalCaseSingularName %>DTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/create-<%= props.table.kebabCaseSingularName %>.dto';
+
+export class Create<%= props.table.pascalCaseSingularName %>Command implements ICommand, Create<%= props.table.pascalCaseSingularName %>DTO {
+  constructor(data: Create<%= props.table.pascalCaseSingularName %>DTO) {
+    Object.assign(this, data);
+  }
+}

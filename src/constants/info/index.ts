@@ -1,1 +1,1 @@
-export const CLI_COMMAND_NAME = 'stokeicli'
+export const CLI_COMMAND_NAME = 'stokeicli';

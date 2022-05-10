@@ -7,14 +7,12 @@ module.exports = (toolbox: Toolbox) => {
   toolbox.generateNestJSInterfaces = async ({
     projectName
   }: GenerateNestJSConfig) => {
-    const { template } = toolbox;
-
     try {
       const baseProjectSrcPath = getBaseProjectSrcPath(
         projectName.kebabCasePluralName
       );
 
-      await template.generate({
+      await toolbox.template.generate({
         template: 'nestjs/src/database/database.module.ts.ejs',
         target: `${baseProjectSrcPath}/database/database.module.ts`,
         props: {

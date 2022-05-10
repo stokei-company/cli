@@ -12,18 +12,27 @@ const command: GluegunCommand = {
         toolbox.print.error('Project name not found!');
         return exit(0);
       }
+      const tables = await toolbox.readTableNames();
+
+      await toolbox.generateNestJSConfigFiles({ projectName, tables });
+      await toolbox.generateNestJSCommands({ projectName, tables });
+      //await toolbox.generateNestJSControllers({ projectName, tables });
+      await toolbox.generateNestJSDatabese({ projectName, tables });
       /*
-      const tables: Table[] = await readTableNames();
-
-      tables.forEach(async (table) => {
-        await template.generate({
-          template: 'nestjs/src/commands',
-          target: `teste/${table.kebabCasePluralName}`
-        });
-      });
-      */
-
-      await toolbox.generateNestJSConfigFiles({ projectName });
+      await toolbox.generateNestJSDTOs({ projectName, tables });
+      await toolbox.generateNestJSEntities({ projectName, tables });
+      await toolbox.generateNestJSEnums({ projectName, tables });
+      await toolbox.generateNestJSEnvironments({ projectName, tables });
+      await toolbox.generateNestJSErrors({ projectName, tables });
+      await toolbox.generateNestJSEvents({ projectName, tables });
+      await toolbox.generateNestJSInterfaces({ projectName, tables });
+      await toolbox.generateNestJSMappers({ projectName, tables });
+      await toolbox.generateNestJSMocks({ projectName, tables });
+      await toolbox.generateNestJSModels({ projectName, tables });
+      await toolbox.generateNestJSQueries({ projectName, tables });
+      await toolbox.generateNestJSRepositories({ projectName, tables });
+      await toolbox.generateNestJSSagas({ projectName, tables });
+      await toolbox.generateNestJSServices({ projectName, tables });
 
       /*
       toolbox.print.info('Installing dependencies...');

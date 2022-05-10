@@ -6,22 +6,22 @@ import { Toolbox } from '../interfaces/toolbox.interface';
 module.exports = (toolbox: Toolbox) => {
   toolbox.generateNestJSMappers = async ({
     projectName,
-    table
+    tables
   }: GenerateNestJSConfig) => {
-    const { template } = toolbox;
-
     try {
       const baseProjectSrcPath = getBaseProjectSrcPath(
         projectName.kebabCasePluralName
       );
 
-      await template.generate({
-        template: 'nestjs/src/mappers/index.ts.ejs',
-        target: `${baseProjectSrcPath}/mappers/${table.kebabCasePluralName}/index.ts`,
-        props: {
-          projectName,
-          table
-        }
+      tables.forEach(async (table) => {
+        await toolbox.template.generate({
+          template: 'nestjs/src/mappers/index.ts.ejs',
+          target: `${baseProjectSrcPath}/mappers/${table.kebabCasePluralName}/index.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
       });
     } catch (error) {
       toolbox.print.error(error);

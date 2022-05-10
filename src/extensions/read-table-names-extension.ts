@@ -1,5 +1,5 @@
 import { exit } from 'process';
-import { TableName } from '../interfaces/tables.interface';
+import { Table, TableName } from '../interfaces/tables.interface';
 import { Toolbox } from '../interfaces/toolbox.interface';
 
 module.exports = (toolbox: Toolbox) => {
@@ -14,11 +14,10 @@ module.exports = (toolbox: Toolbox) => {
         const { singularName } = await prompt.ask({
           type: 'input',
           name: 'singularName',
-          message:
-            'Qual o nome da tabela no SINGULAR? ("exit" para sair/continuar)'
+          message: 'Qual o nome da tabela no SINGULAR?'
         });
 
-        if (singularName.toLowerCase() === 'exit') {
+        if (!singularName?.trim()?.toLowerCase()) {
           exitCommandTableNames = true;
           continue;
         }
@@ -44,7 +43,7 @@ module.exports = (toolbox: Toolbox) => {
         print.error('Você cancelou o comando sem nenhuma tabela!');
         return exit(0);
       }
-      const tables = tableNames.map(({ singularName, pluralName }) =>
+      const tables: Table[] = tableNames.map(({ singularName, pluralName }) =>
         convertString(singularName, pluralName)
       );
       return tables;

@@ -1,0 +1,40 @@
+import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { Create<%= props.table.pascalCaseSingularName %>Command } from '@/commands/implements/<%= props.table.kebabCasePluralName %>/create-<%= props.table.kebabCaseSingularName %>.command';
+import {
+  <%= props.table.pascalCaseSingularName %>NotFoundException,
+  DataNotFoundException,
+  ParamNotFoundException
+} from '@/errors';
+import { Create<%= props.table.pascalCaseSingularName %>Repository } from '@/repositories/<%= props.table.kebabCasePluralName %>/create-<%= props.table.kebabCaseSingularName %>';
+import { cleanObject } from '@stokei/nestjs';
+
+type Create<%= props.table.pascalCaseSingularName %>CommandKeys = keyof Create<%= props.table.pascalCaseSingularName %>Command;
+
+@CommandHandler(Create<%= props.table.pascalCaseSingularName %>Command)
+export class Create<%= props.table.pascalCaseSingularName %>CommandHandler
+  implements ICommandHandler<Create<%= props.table.pascalCaseSingularName %>Command>
+{
+  constructor(
+    private readonly create<%= props.table.pascalCaseSingularName %>Repository: Create<%= props.table.pascalCaseSingularName %>Repository,
+    private readonly publisher: EventPublisher
+  ) {}
+
+  async execute(command: Create<%= props.table.pascalCaseSingularName %>Command) {
+    if (!command) {
+      throw new DataNotFoundException();
+    }
+
+    const data = this.clearData(command);
+
+    const <%= props.table.camelCaseSingularName %>Created = null;
+    const <%= props.table.camelCaseSingularName %>Model = this.publisher.mergeObjectContext(<%= props.table.camelCaseSingularName %>Created);
+    <%= props.table.camelCaseSingularName %>Model.created();
+    <%= props.table.camelCaseSingularName %>Model.commit();
+
+    return created;
+  }
+
+  private clearData(command: Create<%= props.table.pascalCaseSingularName %>Command): Create<%= props.table.pascalCaseSingularName %>Command {
+    return cleanObject(command);
+  }
+}

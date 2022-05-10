@@ -1,0 +1,8 @@
+import { ICommand } from '@nestjs/cqrs';
+import { Update<%= props.table.pascalCaseSingularName %>DTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/update-<%= props.table.kebabCaseSingularName %>.dto';
+
+export class Update<%= props.table.pascalCaseSingularName %>Command implements ICommand, Update<%= props.table.pascalCaseSingularName %>DTO {
+  constructor(data: Update<%= props.table.pascalCaseSingularName %>DTO) {
+    Object.assign(this, data);
+  }
+}
