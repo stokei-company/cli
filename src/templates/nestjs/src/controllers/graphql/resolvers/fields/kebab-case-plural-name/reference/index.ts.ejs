@@ -1,0 +1,13 @@
+import { Resolver, ResolveReference } from '@nestjs/graphql';
+import { <%= props.table.pascalCasePluralName %>Loader } from '@/controllers/graphql/dataloaders/<%= props.table.kebabCasePluralName %>.loader';
+import { <%= props.table.pascalCaseSingularName %> } from '@/controllers/graphql/types/<%= props.table.kebabCaseSingularName %>';
+
+@Resolver(() => <%= props.table.pascalCaseSingularName %>)
+export class <%= props.table.pascalCaseSingularName %>ReferenceResolver {
+  constructor(private readonly <%= props.table.camelCasePluralName %>Loader: <%= props.table.pascalCasePluralName %>Loader) {}
+
+  @ResolveReference()
+  resolveReference(reference: { __typename: string; id: string }) {
+    return this.<%= props.table.camelCasePluralName %>Loader.findByIds.load(reference.id);
+  }
+}

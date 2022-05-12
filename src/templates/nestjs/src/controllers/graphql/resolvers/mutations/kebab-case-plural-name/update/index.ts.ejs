@@ -1,0 +1,25 @@
+import { UseGuards } from '@nestjs/common';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { Update<%= props.table.pascalCaseSingularName %>Input } from '@/controllers/graphql/inputs/<%= props.table.kebabCasePluralName %>/update-<%= props.table.kebabCaseSingularName %>.input';
+import { <%= props.table.pascalCaseSingularName %> } from '@/controllers/graphql/types/<%= props.table.kebabCaseSingularName %>';
+import { Update<%= props.table.pascalCaseSingularName %>Service } from '@/services/<%= props.table.kebabCasePluralName %>/update-<%= props.table.kebabCaseSingularName %>';
+
+@Resolver(() => <%= props.table.pascalCaseSingularName %>)
+export class Update<%= props.table.pascalCaseSingularName %>Resolver {
+  constructor(private readonly update<%= props.table.pascalCaseSingularName %>Service: Update<%= props.table.pascalCaseSingularName %>Service) {}
+
+  @UseGuards(ProjectGuard)
+  @ProjectConfig()
+  @Mutation(() => <%= props.table.pascalCaseSingularName %>)
+  async update<%= props.table.pascalCaseSingularName %>(
+    @Args('input') data: Update<%= props.table.pascalCaseSingularName %>Input,
+    @CurrentProject('id') projectId: string
+  ) {
+    const response = await this.update<%= props.table.pascalCaseSingularName %>Service.execute({
+      ...data,
+      parent: projectId
+    });
+    return response;
+  }
+}

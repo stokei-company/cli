@@ -1,0 +1,13 @@
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { <%= props.table.pascalCasePluralName %>Loader } from '@/controllers/graphql/dataloaders/<%= props.table.kebabCasePluralName %>.loader';
+import { <%= props.table.pascalCaseSingularName %> } from '@/controllers/graphql/types/<%= props.table.kebabCaseSingularName %>';
+
+@Resolver(() => <%= props.table.pascalCaseSingularName %>)
+export class <%= props.table.pascalCaseSingularName %>Resolver {
+  constructor(private readonly <%= props.table.camelCasePluralName %>Loader: <%= props.table.pascalCasePluralName %>Loader) {}
+
+  @Query(() => <%= props.table.pascalCaseSingularName %>)
+  async <%= props.table.camelCaseSingularName %>(@Args('id') id: string) {
+    return await this.<%= props.table.camelCasePluralName %>Loader.findByIds.load(id);
+  }
+}

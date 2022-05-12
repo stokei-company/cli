@@ -16,7 +16,7 @@ const command: GluegunCommand = {
 
       await toolbox.generateNestJSConfigFiles({ projectName, tables });
       await toolbox.generateNestJSCommands({ projectName, tables });
-      //await toolbox.generateNestJSControllers({ projectName, tables });
+      await toolbox.generateNestJSControllers({ projectName, tables });
       await toolbox.generateNestJSDatabese({ projectName, tables });
       /*
       await toolbox.generateNestJSDTOs({ projectName, tables });

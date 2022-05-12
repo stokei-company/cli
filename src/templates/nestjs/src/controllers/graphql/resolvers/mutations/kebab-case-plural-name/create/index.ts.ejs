@@ -1,0 +1,25 @@
+import { UseGuards } from '@nestjs/common';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { Create<%= props.table.pascalCaseSingularName %>Input } from '@/controllers/graphql/inputs/<%= props.table.kebabCasePluralName %>/create-<%= props.table.kebabCaseSingularName %>.input';
+import { <%= props.table.pascalCaseSingularName %> } from '@/controllers/graphql/types/<%= props.table.kebabCaseSingularName %>';
+import { Create<%= props.table.pascalCaseSingularName %>Service } from '@/services/<%= props.table.kebabCasePluralName %>/create-<%= props.table.kebabCaseSingularName %>';
+
+@Resolver(() => <%= props.table.pascalCaseSingularName %>)
+export class Create<%= props.table.pascalCaseSingularName %>Resolver {
+  constructor(private readonly create<%= props.table.pascalCaseSingularName %>Service: Create<%= props.table.pascalCaseSingularName %>Service) {}
+
+  @UseGuards(ProjectGuard)
+  @ProjectConfig()
+  @Mutation(() => <%= props.table.pascalCaseSingularName %>)
+  async create<%= props.table.pascalCaseSingularName %>(
+    @Args('input') data: Create<%= props.table.pascalCaseSingularName %>Input,
+    @CurrentProject('id') projectId: string
+  ) {
+    const response = await this.create<%= props.table.pascalCaseSingularName %>Service.execute({
+      ...data,
+      parent: projectId
+    });
+    return response;
+  }
+}

@@ -1,0 +1,25 @@
+import { UseGuards } from '@nestjs/common';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { Remove<%= props.table.pascalCaseSingularName %>Input } from '@/controllers/graphql/inputs/<%= props.table.kebabCasePluralName %>/remove-<%= props.table.kebabCaseSingularName %>.input';
+import { <%= props.table.pascalCaseSingularName %> } from '@/controllers/graphql/types/<%= props.table.kebabCaseSingularName %>';
+import { Remove<%= props.table.pascalCaseSingularName %>Service } from '@/services/<%= props.table.kebabCasePluralName %>/remove-<%= props.table.kebabCaseSingularName %>';
+
+@Resolver(() => <%= props.table.pascalCaseSingularName %>)
+export class Remove<%= props.table.pascalCaseSingularName %>Resolver {
+  constructor(private readonly remove<%= props.table.pascalCaseSingularName %>Service: Remove<%= props.table.pascalCaseSingularName %>Service) {}
+
+  @UseGuards(ProjectGuard)
+  @ProjectConfig()
+  @Mutation(() => <%= props.table.pascalCaseSingularName %>)
+  async remove<%= props.table.pascalCaseSingularName %>(
+    @Args('input') data: Remove<%= props.table.pascalCaseSingularName %>Input,
+    @CurrentProject('id') projectId: string
+  ) {
+    const response = await this.remove<%= props.table.pascalCaseSingularName %>Service.execute({
+      ...data,
+      parent: projectId
+    });
+    return response;
+  }
+}

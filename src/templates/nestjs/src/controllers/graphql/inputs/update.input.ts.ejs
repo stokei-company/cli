@@ -1,0 +1,22 @@
+import { InputType, Field } from '@nestjs/graphql';
+
+@InputType()
+export class UpdateData<%= props.table.pascalCaseSingularName %>Input {
+  @Field()
+  parent: string;
+}
+
+@InputType()
+export class UpdateWhere<%= props.table.pascalCaseSingularName %>Input {
+  @Field()
+  parent: string;
+}
+
+@InputType()
+export class Update<%= props.table.pascalCaseSingularName %>Input {
+  @Field(() => UpdateData<%= props.table.pascalCaseSingularName %>Input)
+  data: UpdateData<%= props.table.pascalCaseSingularName %>Input;
+  
+  @Field(() => UpdateWhere<%= props.table.pascalCaseSingularName %>Input)
+  where: UpdateWhere<%= props.table.pascalCaseSingularName %>Input;
+}

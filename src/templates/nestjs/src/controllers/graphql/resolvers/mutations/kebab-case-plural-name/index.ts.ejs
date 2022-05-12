@@ -1,0 +1,9 @@
+import { Create<%= props.table.pascalCaseSingularName %>Resolver } from './create-<%= props.table.kebabCaseSingularName %>';
+import { Remove<%= props.table.pascalCaseSingularName %>Resolver } from './remove-<%= props.table.kebabCaseSingularName %>';
+import { Update<%= props.table.pascalCaseSingularName %>Resolver } from './update-<%= props.table.kebabCaseSingularName %>';
+
+export const <%= props.table.pascalCasePluralName %>Mutations = [
+  Create<%= props.table.pascalCaseSingularName %>Resolver,
+  Remove<%= props.table.pascalCaseSingularName %>Resolver,
+  Update<%= props.table.pascalCaseSingularName %>Resolver,
+];
