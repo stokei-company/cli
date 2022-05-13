@@ -13,10 +13,13 @@ module.exports = (toolbox: Toolbox) => {
         projectName.kebabCasePluralName
       );
 
-      tables.forEach(async (table) => {
-        toolbox.print.success(
-          'Table' + baseProjectSrcPath + table.camelCasePluralName
-        );
+      await toolbox.template.generate({
+        template: 'nestjs/src/environments/index.ts.ejs',
+        target: `${baseProjectSrcPath}/environments/index.ts`,
+        props: {
+          projectName,
+          tables
+        }
       });
     } catch (error) {
       toolbox.print.error(error);

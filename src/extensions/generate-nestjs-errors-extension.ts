@@ -13,10 +13,50 @@ module.exports = (toolbox: Toolbox) => {
         projectName.kebabCasePluralName
       );
 
+      await toolbox.template.generate({
+        template: 'nestjs/src/errors/index.ts.ejs',
+        target: `${baseProjectSrcPath}/errors/index.ts`,
+        props: {
+          projectName,
+          tables
+        }
+      });
+      await toolbox.template.generate({
+        template: 'nestjs/src/errors/data-not-found/index.ts.ejs',
+        target: `${baseProjectSrcPath}/errors/data-not-found/index.ts`,
+        props: {
+          projectName,
+          tables
+        }
+      });
+      await toolbox.template.generate({
+        template: 'nestjs/src/errors/param-not-found/index.ts.ejs',
+        target: `${baseProjectSrcPath}/errors/param-not-found/index.ts`,
+        props: {
+          projectName,
+          tables
+        }
+      });
+
       tables.forEach(async (table) => {
-        toolbox.print.success(
-          'Table' + baseProjectSrcPath + table.camelCasePluralName
-        );
+        await toolbox.template.generate({
+          template:
+            'nestjs/src/errors/kebab-case-singular-name-not-found/index.ts.ejs',
+          target: `${baseProjectSrcPath}/errors/${table.kebabCaseSingularName}-not-found/index.ts.ejs`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template:
+            'nestjs/src/errors/kebab-case-plural-name-not-found/index.ts.ejs',
+          target: `${baseProjectSrcPath}/errors/${table.kebabCasePluralName}-not-found/index.ts.ejs`,
+          props: {
+            projectName,
+            table
+          }
+        });
       });
     } catch (error) {
       toolbox.print.error(error);

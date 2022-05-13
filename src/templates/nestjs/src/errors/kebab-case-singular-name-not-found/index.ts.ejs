@@ -1,0 +1,7 @@
+import { NotFoundException } from '@nestjs/common';
+
+export class <%= props.table.pascalCaseSingularName %>NotFoundException extends NotFoundException {
+  constructor() {
+    super('<%= props.table.camelCaseSingularName %>NotFound');
+  }
+}

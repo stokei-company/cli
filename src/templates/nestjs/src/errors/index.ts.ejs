@@ -1,0 +1,6 @@
+<% props.tables.forEach(function(table){ %>
+export * from './<%= table.kebabCaseSingularName %>-not-found';
+export * from './<%= table.kebabCasePluralName %>-not-found';
+<% }); %>
+export * from './data-not-found';
+export * from './param-not-found';

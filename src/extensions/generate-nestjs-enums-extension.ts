@@ -13,10 +13,21 @@ module.exports = (toolbox: Toolbox) => {
         projectName.kebabCasePluralName
       );
 
-      tables.forEach(async (table) => {
-        toolbox.print.success(
-          'Table' + baseProjectSrcPath + table.camelCasePluralName
-        );
+      await toolbox.template.generate({
+        template: 'nestjs/src/enums/server-id-prefix.enum.ts.ejs',
+        target: `${baseProjectSrcPath}/enums/server-id-prefix.enum.ts`,
+        props: {
+          projectName,
+          tables
+        }
+      });
+      await toolbox.template.generate({
+        template: 'nestjs/src/enums/server-info.enum.ts.ejs',
+        target: `${baseProjectSrcPath}/enums/server-info.enum.ts`,
+        props: {
+          projectName,
+          tables
+        }
       });
     } catch (error) {
       toolbox.print.error(error);

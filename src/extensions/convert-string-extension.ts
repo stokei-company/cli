@@ -25,10 +25,12 @@ module.exports = (toolbox: Toolbox) => {
         kebabCaseSingularName: strings.kebabCase(singular),
         camelCaseSingularName: strings.camelCase(singular),
         snakeCaseSingularName: strings.snakeCase(singular),
+        snakeUpperCaseSingularName: strings.snakeCase(singular)?.toUpperCase(),
         pascalCasePluralName: strings.pascalCase(plural),
         kebabCasePluralName: strings.kebabCase(plural),
         camelCasePluralName: strings.camelCase(plural),
-        snakeCasePluralName: strings.snakeCase(plural)
+        snakeCasePluralName: strings.snakeCase(plural),
+        snakeUpperCasePluralName: strings.snakeCase(plural)?.toUpperCase()
       };
     } catch (error) {
       return exit(0);
