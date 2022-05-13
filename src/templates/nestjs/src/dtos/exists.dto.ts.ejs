@@ -1,0 +1,7 @@
+export interface IExists<%= props.table.pascalCasePluralName %>WhereDTO {
+  parent?: string;
+}
+
+export interface IExists<%= props.table.pascalCasePluralName %>DTO {
+  where: IExists<%= props.table.pascalCasePluralName %>WhereDTO;
+}
