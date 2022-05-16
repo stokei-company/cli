@@ -1,0 +1,34 @@
+import { FindAll<%= props.table.pascalCasePluralName %>Repository } from '@/repositories/<%= props.table.kebabCasePluralName %>/find-all-<%= props.table.kebabCasePluralName %>';
+import { Test } from '@nestjs/testing';
+import { FindAll<%= props.table.pascalCasePluralName %>QueryHandler } from '.';
+
+describe('FindAll<%= props.table.pascalCasePluralName %>QueryHandler', () => {
+  let findAll<%= props.table.pascalCasePluralName %>Repository: FindAll<%= props.table.pascalCasePluralName %>Repository;
+  let findAll<%= props.table.pascalCasePluralName %>QueryHandler: FindAll<%= props.table.pascalCasePluralName %>QueryHandler;
+
+  beforeEach(async () => {
+    const moduleRef = await Test.createTestingModule({
+      controllers: [],
+      providers: [
+        {
+          provide: FindAll<%= props.table.pascalCasePluralName %>Repository,
+          useValue: {
+            execute: jest.fn()
+          }
+        },
+        FindAll<%= props.table.pascalCasePluralName %>QueryHandler
+      ]
+    }).compile();
+
+    findAll<%= props.table.pascalCasePluralName %>Repository = moduleRef.get(FindAll<%= props.table.pascalCasePluralName %>Repository);
+    findAll<%= props.table.pascalCasePluralName %>QueryHandler = moduleRef.get(FindAll<%= props.table.pascalCasePluralName %>QueryHandler);
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should be defined', () => {
+    expect(findAll<%= props.table.pascalCasePluralName %>QueryHandler).toBeDefined();
+    expect(findAll<%= props.table.pascalCasePluralName %>Repository).toBeDefined();
+  });
+});

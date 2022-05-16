@@ -1,0 +1,9 @@
+import { <%= props.table.pascalCaseSingularName %>CreatedHandler } from './<%= props.table.kebabCaseSingularName %>-created.handler';
+import { <%= props.table.pascalCaseSingularName %>UpdatedHandler } from './<%= props.table.kebabCaseSingularName %>-updated.handler';
+import { <%= props.table.pascalCaseSingularName %>RemovedHandler } from './<%= props.table.kebabCaseSingularName %>-removed.handler';
+
+export const <%= props.table.pascalCaseSingularName %>EventsHandlers = [
+  <%= props.table.pascalCaseSingularName %>CreatedHandler,
+  <%= props.table.pascalCaseSingularName %>UpdatedHandler,
+  <%= props.table.pascalCaseSingularName %>RemovedHandler
+];

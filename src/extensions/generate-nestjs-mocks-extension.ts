@@ -13,10 +13,21 @@ module.exports = (toolbox: Toolbox) => {
         projectName.kebabCasePluralName
       );
 
+      const templateMocksPath = 'nestjs/src/mocks';
+      const templateMockModelsPath = `${templateMocksPath}/models`;
+
+      const targetMocksPath = `${baseProjectSrcPath}/mocks`;
+      const targetMockModelsPath = `${targetMocksPath}/models`;
+
       tables.forEach(async (table) => {
-        toolbox.print.success(
-          'Table' + baseProjectSrcPath + table.camelCasePluralName
-        );
+        await toolbox.template.generate({
+          template: `${templateMockModelsPath}/model.mock.ts.ejs`,
+          target: `${targetMockModelsPath}/${table.kebabCaseSingularName}.mock.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
       });
     } catch (error) {
       toolbox.print.error(error);

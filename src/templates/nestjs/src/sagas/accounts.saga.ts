@@ -2,9 +2,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
-import { AccountCreatedEvent } from '../events/implements/accounts/account.created.event';
-import { PasswordChangedEvent } from '../events/implements/accounts/password.changed.event';
-import { PasswordForgottenEvent } from '../events/implements/accounts/password.forgotten.event';
+import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
+import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
+import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
 
 @Injectable()
 export class AccountsSagas {
@@ -34,16 +34,16 @@ export class AccountsSagas {
   };
 
   @Saga()
-  passwordChanged = (events$: Observable<any>): Observable<ICommand> => {
+  accountRemoved = (events$: Observable<any>): Observable<ICommand> => {
     return events$.pipe(
-      ofType(PasswordChangedEvent),
+      ofType(AccountRemovedEvent),
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [PasswordChangedEvent] Saga for example send a email'
+          'Inside [AccountRemovedEvent] Saga for example send a email'
         );
         this.logger.log(
-          'Inside [PasswordChangedEvent] Saga event passwordChanged:' +
+          'Inside [AccountRemovedEvent] Saga event accountRemoved:' +
             JSON.stringify(event)
         );
         return null;
@@ -52,16 +52,16 @@ export class AccountsSagas {
   };
 
   @Saga()
-  passwordForgotten = (events$: Observable<any>): Observable<ICommand> => {
+  accountUpdated = (events$: Observable<any>): Observable<ICommand> => {
     return events$.pipe(
-      ofType(PasswordForgottenEvent),
+      ofType(AccountUpdatedEvent),
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [PasswordForgottenEvent] Saga for example send a email'
+          'Inside [AccountUpdatedEvent] Saga for example send a email'
         );
         this.logger.log(
-          'Inside [PasswordForgottenEvent] Saga event passwordForgotten:' +
+          'Inside [AccountUpdatedEvent] Saga event accountUpdated:' +
             JSON.stringify(event)
         );
         return null;

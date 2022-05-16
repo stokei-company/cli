@@ -1,0 +1,77 @@
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import {
+  IOperator,
+  IPaginatedType,
+  PaginationMapper,
+  cleanObject,
+  cleanSortValue,
+  cleanValueNumber,
+  cleanWhereDataString
+} from '@stokei/nestjs';
+import { DataNotFoundException } from '@/errors';
+import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
+import { FindAll<%= props.table.pascalCasePluralName %>Query } from '@/queries/implements/<%= props.table.kebabCasePluralName %>/find-all-<%= props.table.kebabCasePluralName %>.query';
+import { Count<%= props.table.pascalCasePluralName %>Repository } from '@/repositories/<%= props.table.kebabCasePluralName %>/count-<%= props.table.kebabCasePluralName %>';
+import { FindAll<%= props.table.pascalCasePluralName %>Repository } from '@/repositories/<%= props.table.kebabCasePluralName %>/find-all-<%= props.table.kebabCasePluralName %>';
+
+@QueryHandler(FindAll<%= props.table.pascalCasePluralName %>Query)
+export class FindAll<%= props.table.pascalCasePluralName %>QueryHandler
+  implements IQueryHandler<FindAll<%= props.table.pascalCasePluralName %>Query>
+{
+  constructor(
+    private readonly findAll<%= props.table.pascalCaseSingularName %>Repository: FindAll<%= props.table.pascalCasePluralName %>Repository,
+    private readonly count<%= props.table.pascalCasePluralName %>Repository: Count<%= props.table.pascalCasePluralName %>Repository
+  ) {}
+
+  async execute(
+    query: FindAll<%= props.table.pascalCasePluralName %>Query
+  ): Promise<IPaginatedType<<%= props.table.pascalCaseSingularName %>Model>> {
+    if (!query) {
+      throw new DataNotFoundException();
+    }
+
+    const data = this.clearData(query);
+    const <%= props.table.camelCasePluralName %> = await this.findAll<%= props.table.pascalCaseSingularName %>Repository.execute(data);
+    const totalCount = await this.count<%= props.table.pascalCasePluralName %>Repository.execute({
+      where: data.where
+    });
+    return new PaginationMapper<<%= props.table.pascalCaseSingularName %>Model>().toPaginationList({
+      items: <%= props.table.camelCasePluralName %>,
+      page: data.page,
+      totalCount
+    });
+  }
+
+  private clearData(query: FindAll<%= props.table.pascalCasePluralName %>Query): FindAll<%= props.table.pascalCasePluralName %>Query {
+    if (!query) {
+      return null;
+    }
+    const clearWhereOperatorData = (operator: IOperator) => {
+      const operatorData = query?.where?.[operator];
+      if (!operatorData) {
+        return null;
+      }
+      return {
+        [operator]: {
+          parent: cleanWhereDataString(operatorData.parent)
+        }
+      };
+    };
+    return {
+      ...query,
+      where: {
+        ...cleanObject(clearWhereOperatorData('AND')),
+        ...cleanObject(clearWhereOperatorData('OR')),
+        ...cleanObject(clearWhereOperatorData('NOT'), true)
+      },
+      page: cleanObject({
+        limit: cleanValueNumber(query.page?.limit),
+        number: cleanValueNumber(query.page?.number)
+      }),
+      orderBy: cleanObject({
+        createdAt: cleanSortValue(query.orderBy?.createdAt),
+        updatedAt: cleanSortValue(query.orderBy?.updatedAt)
+      })
+    };
+  }
+}

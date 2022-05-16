@@ -1,0 +1,10 @@
+<% props.tables.forEach(function(table){ %>
+import { <%= table.pascalCaseSingularName %>QueriesHandlers } from './<%= table.kebabCasePluralName %>';
+<% }); %>
+
+export const QueriesHandlers = [
+  <% props.tables.forEach(function(table){ %>
+  ...<%= table.pascalCaseSingularName %>QueriesHandlers,
+  <% }); %>
+];
+  

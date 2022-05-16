@@ -5,7 +5,8 @@ import { Toolbox } from '../interfaces/toolbox.interface';
 
 module.exports = (toolbox: Toolbox) => {
   toolbox.generateNestJSInterfaces = async ({
-    projectName
+    projectName,
+    tables
   }: GenerateNestJSConfig) => {
     try {
       const baseProjectSrcPath = getBaseProjectSrcPath(
@@ -13,10 +14,11 @@ module.exports = (toolbox: Toolbox) => {
       );
 
       await toolbox.template.generate({
-        template: 'nestjs/src/database/database.module.ts.ejs',
-        target: `${baseProjectSrcPath}/database/database.module.ts`,
+        template: 'nestjs/src/interfaces/index.ts.ejs',
+        target: `${baseProjectSrcPath}/interfaces/index.ts`,
         props: {
-          projectName
+          projectName,
+          tables
         }
       });
     } catch (error) {

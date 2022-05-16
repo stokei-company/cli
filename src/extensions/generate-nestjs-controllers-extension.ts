@@ -130,6 +130,14 @@ module.exports = (toolbox: Toolbox) => {
           }
         });
         await toolbox.template.generate({
+          template: `${templateControllersGraphQLInputsPath}/find-all.input.ts.ejs`,
+          target: `${targetControllersGraphQLInputsPath}/${table.kebabCasePluralName}/find-all-${table.kebabCasePluralName}.input.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
           template: `${templateControllersGraphQLInputsPath}/update.input.ts.ejs`,
           target: `${targetControllersGraphQLInputsPath}/${table.kebabCasePluralName}/update-${table.kebabCaseSingularName}.input.ts`,
           props: {
@@ -205,6 +213,14 @@ module.exports = (toolbox: Toolbox) => {
           }
         });
         await toolbox.template.generate({
+          template: `${templateControllersGraphQLResolversQueriesPath}/kebab-case-plural-name/kebab-case-plural-name/index.ts.ejs`,
+          target: `${targetControllersGraphQLResolversQueriesPath}/${table.kebabCasePluralName}/${table.kebabCasePluralName}/index.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
           template: `${templateControllersGraphQLResolversQueriesPath}/kebab-case-plural-name/kebab-case-singular-name/index.ts.ejs`,
           target: `${targetControllersGraphQLResolversQueriesPath}/${table.kebabCasePluralName}/${table.kebabCaseSingularName}/index.ts`,
           props: {
@@ -213,6 +229,14 @@ module.exports = (toolbox: Toolbox) => {
           }
         });
 
+        await toolbox.template.generate({
+          template: `${templateControllersGraphQLTypesPath}/kebab-case-plural-name.ts.ejs`,
+          target: `${targetControllersGraphQLTypesPath}/${table.kebabCasePluralName}.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
         await toolbox.template.generate({
           template: `${templateControllersGraphQLTypesPath}/kebab-case-singular-name.ts.ejs`,
           target: `${targetControllersGraphQLTypesPath}/${table.kebabCaseSingularName}.ts`,

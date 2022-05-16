@@ -1,0 +1,14 @@
+import { <%= props.table.pascalCaseSingularName %>UpdatedEvent } from '@/events/implements/<%= props.table.kebabCasePluralName %>/<%= props.table.kebabCaseSingularName %>-updated.event';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { Logger } from '@nestjs/common';
+
+@EventsHandler(<%= props.table.pascalCaseSingularName %>UpdatedEvent)
+export class <%= props.table.pascalCaseSingularName %>UpdatedHandler
+  implements IEventHandler<<%= props.table.pascalCaseSingularName %>UpdatedEvent>
+{
+  async handle(event: <%= props.table.pascalCaseSingularName %>UpdatedEvent) {
+    const { <%= props.table.camelCaseSingularName %>Id } = event;
+    Logger.log(`#${<%= props.table.camelCaseSingularName %>Id} - updated!`, <%= props.table.pascalCaseSingularName %>UpdatedHandler.name);
+    return event;
+  }
+}

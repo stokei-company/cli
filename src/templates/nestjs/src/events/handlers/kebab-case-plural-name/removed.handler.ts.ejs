@@ -1,0 +1,14 @@
+import { <%= props.table.pascalCaseSingularName %>RemovedEvent } from '@/events/implements/<%= props.table.kebabCasePluralName %>/<%= props.table.kebabCaseSingularName %>-removed.event';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { Logger } from '@nestjs/common';
+
+@EventsHandler(<%= props.table.pascalCaseSingularName %>RemovedEvent)
+export class <%= props.table.pascalCaseSingularName %>RemovedHandler
+  implements IEventHandler<<%= props.table.pascalCaseSingularName %>RemovedEvent>
+{
+  async handle(event: <%= props.table.pascalCaseSingularName %>RemovedEvent) {
+    const { <%= props.table.camelCaseSingularName %>Id } = event;
+    Logger.log(`#${<%= props.table.camelCaseSingularName %>Id} - removed!`, <%= props.table.pascalCaseSingularName %>RemovedHandler.name);
+    return event;
+  }
+}

@@ -1,3 +1,7 @@
 import { <%= props.table.pascalCaseSingularName %>Resolver } from './<%= props.table.kebabCaseSingularName %>';
+import { <%= props.table.pascalCasePluralName %>Resolver } from './<%= props.table.kebabCasePluralName %>';
 
-export const <%= props.table.pascalCasePluralName %>Queries = [<%= props.table.pascalCaseSingularName %>Resolver];
+export const <%= props.table.pascalCasePluralName %>Queries = [
+    <%= props.table.pascalCaseSingularName %>Resolver,
+    <%= props.table.pascalCasePluralName %>Resolver,
+];

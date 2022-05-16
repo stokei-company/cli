@@ -23,13 +23,13 @@ const command: GluegunCommand = {
       await toolbox.generateNestJSEnums({ projectName, tables });
       await toolbox.generateNestJSEnvironments({ projectName, tables });
       await toolbox.generateNestJSErrors({ projectName, tables });
-
-      /*
       await toolbox.generateNestJSEvents({ projectName, tables });
       await toolbox.generateNestJSInterfaces({ projectName, tables });
       await toolbox.generateNestJSMappers({ projectName, tables });
       await toolbox.generateNestJSMocks({ projectName, tables });
       await toolbox.generateNestJSModels({ projectName, tables });
+
+      /*
       await toolbox.generateNestJSQueries({ projectName, tables });
       await toolbox.generateNestJSRepositories({ projectName, tables });
       await toolbox.generateNestJSSagas({ projectName, tables });

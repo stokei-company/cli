@@ -1,0 +1,36 @@
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  <%= props.table.pascalCaseSingularName %>NotFoundException,
+  DataNotFoundException,
+  ParamNotFoundException
+} from '@/errors';
+import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
+import { Find<%= props.table.pascalCaseSingularName %>ByIdRepository } from '@/repositories/<%= props.table.kebabCasePluralName %>/find-<%= props.table.kebabCaseSingularName %>-by-id';
+import { Find<%= props.table.pascalCaseSingularName %>ByIdQuery } from '@/queries/implements/<%= props.table.kebabCasePluralName %>/find-<%= props.table.kebabCaseSingularName %>-by-id.query';
+
+@QueryHandler(Find<%= props.table.pascalCaseSingularName %>ByIdQuery)
+export class Find<%= props.table.pascalCaseSingularName %>ByIdQueryHandler
+  implements IQueryHandler<Find<%= props.table.pascalCaseSingularName %>ByIdQuery>
+{
+  constructor(
+    private readonly find<%= props.table.pascalCaseSingularName %>ByIdRepository: Find<%= props.table.pascalCaseSingularName %>ByIdRepository
+  ) {}
+
+  async execute(query: Find<%= props.table.pascalCaseSingularName %>ByIdQuery): Promise<<%= props.table.pascalCaseSingularName %>Model> {
+    if (!query) {
+      throw new DataNotFoundException();
+    }
+
+    const id = cleanValue(splitServiceId(query.id)?.id);
+    if (!id) {
+      throw new ParamNotFoundException('id');
+    }
+
+    const <%= props.table.camelCaseSingularName %> = await this.find<%= props.table.pascalCaseSingularName %>ByIdRepository.execute(id);
+    if (!<%= props.table.camelCaseSingularName %>) {
+      throw new <%= props.table.pascalCaseSingularName %>NotFoundException();
+    }
+    return <%= props.table.camelCaseSingularName %>;
+  }
+}

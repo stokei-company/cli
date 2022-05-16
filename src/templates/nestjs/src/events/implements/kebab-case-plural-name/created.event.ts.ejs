@@ -1,0 +1,11 @@
+interface IData<%= props.table.pascalCaseSingularName %>CreatedEvent {
+  readonly <%= props.table.camelCaseSingularName %>Id: string;
+}
+
+export class <%= props.table.pascalCaseSingularName %>CreatedEvent {
+  readonly <%= props.table.camelCaseSingularName %>Id: string;
+
+  constructor(data: IData<%= props.table.pascalCaseSingularName %>CreatedEvent) {
+    this.<%= props.table.camelCaseSingularName %>Id = data.<%= props.table.camelCaseSingularName %>Id;
+  }
+}

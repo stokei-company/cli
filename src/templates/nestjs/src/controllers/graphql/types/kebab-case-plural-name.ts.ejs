@@ -1,0 +1,6 @@
+import { ObjectType } from '@nestjs/graphql';
+import { Paginated } from '@stokei/nestjs';
+import { <%= props.table.pascalCaseSingularName %> } from './<%= props.table.kebabCaseSingularName %>';
+
+@ObjectType()
+export class <%= props.table.pascalCasePluralName %> extends Paginated(<%= props.table.pascalCaseSingularName %>) {}

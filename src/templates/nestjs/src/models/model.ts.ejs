@@ -1,0 +1,63 @@
+import { Server<%= props.table.pascalCaseSingularName %>IdPrefix } from '@/enums/server-id-prefix.enum';
+import { <%= props.table.pascalCaseSingularName %>CreatedEvent } from '@/events/implements/<%= props.table.kebabCasePluralName %>/<%= props.table.kebabCaseSingularName %>-created.event';
+import { <%= props.table.pascalCaseSingularName %>UpdatedEvent } from '@/events/implements/<%= props.table.kebabCasePluralName %>/<%= props.table.kebabCaseSingularName %>-updated.event';
+import { <%= props.table.pascalCaseSingularName %>RemovedEvent } from '@/events/implements/<%= props.table.kebabCasePluralName %>/<%= props.table.kebabCaseSingularName %>-removed.event';
+import { AggregateRoot } from '@nestjs/cqrs';
+import { createServiceId } from '@stokei/nestjs';
+
+export interface I<%= props.table.pascalCaseSingularName %>ModelData {
+  readonly id?: string;
+  readonly _id?: string;
+  readonly parent: string;
+  readonly updatedAt?: string;
+  readonly createdAt?: string;
+}
+
+export class <%= props.table.pascalCaseSingularName %>Model extends AggregateRoot {
+  readonly id: string;
+  readonly parent: string;
+  readonly updatedAt?: string;
+  readonly createdAt?: string;
+  constructor(data: I<%= props.table.pascalCaseSingularName %>ModelData) {
+    super();
+
+    this.id = createServiceId({
+      service: Server<%= props.table.pascalCaseSingularName %>IdPrefix.ACCOUNTS,
+      module: Server<%= props.table.pascalCaseSingularName %>IdPrefix.ACCOUNTS,
+      id: data._id?.toString() || data.id
+    });
+    this.parent = data.parent;
+    this.updatedAt = data.updatedAt;
+    this.createdAt = data.createdAt;
+  }
+
+  created<%= props.table.pascalCaseSingularName %>() {
+    if (this.id) {
+      this.apply(
+        new <%= props.table.pascalCaseSingularName %>CreatedEvent({
+          <%= props.table.camelCaseSingularName %>Id: this.id
+        })
+      );
+    }
+  }
+
+  updated<%= props.table.pascalCaseSingularName %>() {
+    if (this.id) {
+      this.apply(
+        new <%= props.table.pascalCaseSingularName %>UpdatedEvent({
+          <%= props.table.camelCaseSingularName %>Id: this.id
+        })
+      );
+    }
+  }
+
+  removed<%= props.table.pascalCaseSingularName %>() {
+    if (this.id) {
+      this.apply(
+        new <%= props.table.pascalCaseSingularName %>RemovedEvent({
+          <%= props.table.camelCaseSingularName %>Id: this.id
+        })
+      );
+    }
+  }
+}

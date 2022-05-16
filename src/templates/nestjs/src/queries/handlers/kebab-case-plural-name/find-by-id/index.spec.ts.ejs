@@ -1,0 +1,34 @@
+import { Find<%= props.table.pascalCaseSingularName %>ByIdRepository } from '@/repositories/<%= props.table.kebabCasePluralName %>/find-<%= props.table.kebabCaseSingularName %>-by-id';
+import { Test } from '@nestjs/testing';
+import { Find<%= props.table.pascalCaseSingularName %>ByIdQueryHandler } from '.';
+
+describe('Find<%= props.table.pascalCaseSingularName %>ByIdQueryHandler', () => {
+  let find<%= props.table.pascalCaseSingularName %>ByIdRepository: Find<%= props.table.pascalCaseSingularName %>ByIdRepository;
+  let find<%= props.table.pascalCaseSingularName %>ByIdQueryHandler: Find<%= props.table.pascalCaseSingularName %>ByIdQueryHandler;
+
+  beforeEach(async () => {
+    const moduleRef = await Test.createTestingModule({
+      controllers: [],
+      providers: [
+        {
+          provide: Find<%= props.table.pascalCaseSingularName %>ByIdRepository,
+          useValue: {
+            execute: jest.fn()
+          }
+        },
+        Find<%= props.table.pascalCaseSingularName %>ByIdQueryHandler
+      ]
+    }).compile();
+
+    find<%= props.table.pascalCaseSingularName %>ByIdRepository = moduleRef.get(Find<%= props.table.pascalCaseSingularName %>ByIdRepository);
+    find<%= props.table.pascalCaseSingularName %>ByIdQueryHandler = moduleRef.get(Find<%= props.table.pascalCaseSingularName %>ByIdQueryHandler);
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should be defined', () => {
+    expect(find<%= props.table.pascalCaseSingularName %>ByIdQueryHandler).toBeDefined();
+    expect(find<%= props.table.pascalCaseSingularName %>ByIdRepository).toBeDefined();
+  });
+});

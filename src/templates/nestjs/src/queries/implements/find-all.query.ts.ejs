@@ -1,0 +1,8 @@
+import { IQuery } from '@nestjs/cqrs';
+import { FindAll<%= props.table.pascalCasePluralName %>DTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/find-all-<%= props.table.kebabCasePluralName %>.dto'
+
+export class Find<%= props.table.pascalCaseSingularName %>ByIdQuery implements IQuery, FindAll<%= props.table.pascalCasePluralName %>DTO {
+  constructor(data: FindAll<%= props.table.pascalCasePluralName %>DTO) {
+    Object.assign(this, data);
+  }
+}

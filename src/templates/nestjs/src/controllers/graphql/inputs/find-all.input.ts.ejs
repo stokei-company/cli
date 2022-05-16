@@ -1,0 +1,28 @@
+import {
+  OrderByDataFindAll<%= props.table.pascalCasePluralName %>DTO,
+  WhereDataFindAll<%= props.table.pascalCasePluralName %>DTO
+} from '@/dtos/<%= props.table.kebabCasePluralName %>/find-all-<%= props.table.kebabCasePluralName %>.dto';
+import { Field, InputType } from '@nestjs/graphql';
+import { OrderBy, WhereDataStringInput, WherePaginated } from '@stokei/nestjs';
+
+@InputType()
+class WhereDataFindAll<%= props.table.pascalCasePluralName %>DataInput implements WhereDataFindAll<%= props.table.pascalCasePluralName %>DTO {
+  @Field({ nullable: true })
+  parent: WhereDataStringInput;
+}
+
+@InputType()
+export class OrderByDataFindAll<%= props.table.pascalCasePluralName %>Input
+  implements OrderByDataFindAll<%= props.table.pascalCasePluralName %>DTO
+{
+  @Field(() => OrderBy, { nullable: true })
+  createdAt?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  updatedAt?: OrderBy;
+}
+
+@InputType()
+export class WhereDataFindAll<%= props.table.pascalCasePluralName %>Input extends WherePaginated(
+  WhereDataFindAll<%= props.table.pascalCasePluralName %>DataInput
+) {}

@@ -1,0 +1,27 @@
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { PaginationInput } from '@stokei/common';
+import {
+  OrderByDataFindAll<%= props.table.pascalCasePluralName %>Input,
+  WhereDataFindAll<%= props.table.pascalCasePluralName %>Input
+} from '@/controllers/graphql/inputs/<%= props.table.kebabCasePluralName %>/find-all-<%= props.table.kebabCasePluralName %>.input';
+import { <%= props.table.pascalCaseSingularName %> } from '@/controllers/graphql/types/<%= props.table.kebabCaseSingularName %>';
+import { <%= props.table.pascalCasePluralName %> } from '@/controllers/graphql/types/<%= props.table.kebabCasePluralName %>';
+import { FindAll<%= props.table.pascalCasePluralName %>Service } from '@/services/<%= props.table.kebabCasePluralName %>/find-all-<%= props.table.kebabCasePluralName %>';
+
+@Resolver(() => <%= props.table.pascalCaseSingularName %>)
+export class <%= props.table.pascalCasePluralName %>Resolver {
+  constructor(private readonly findAll<%= props.table.pascalCasePluralName %>Service: FindAll<%= props.table.pascalCasePluralName %>Service) {}
+
+  @Query(() => <%= props.table.pascalCasePluralName %>)
+  async <%= props.table.camelCasePluralName %>(
+    @Args('page', { type: () => PaginationInput, nullable: true }) page: PaginationInput,
+    @Args('where', { type: () => WhereDataFindAll<%= props.table.pascalCasePluralName %>Input, nullable: true }) where: WhereDataFindAll<%= props.table.pascalCasePluralName %>Input,
+    @Args('orderBy', { type: () => OrderByDataFindAll<%= props.table.pascalCasePluralName %>Input, nullable: true }) orderBy: OrderByDataFindAll<%= props.table.pascalCasePluralName %>Input
+  ) {
+    return await this.findAll<%= props.table.pascalCasePluralName %>Service.execute({
+      page,
+      where,
+      orderBy
+    });
+  }
+}

@@ -1,0 +1,7 @@
+import { Find<%= props.table.pascalCaseSingularName %>ByIdQueryHandler } from './find-<%= props.table.kebabCaseSingularName %>-by-id';
+import { FindAll<%= props.table.pascalCasePluralName %>QueryHandler } from './find-all-<%= props.table.kebabCasePluralName %>';
+
+export const <%= props.table.pascalCaseSingularName %>QueriesHandlers = [
+  Find<%= props.table.pascalCaseSingularName %>ByIdQueryHandler,
+  FindAll<%= props.table.pascalCasePluralName %>QueryHandler
+];

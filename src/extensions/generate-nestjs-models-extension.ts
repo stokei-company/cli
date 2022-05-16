@@ -13,10 +13,19 @@ module.exports = (toolbox: Toolbox) => {
         projectName.kebabCasePluralName
       );
 
+      const templateModelsPath = `nestjs/src/models`;
+
+      const targetModelsPath = `${baseProjectSrcPath}/models`;
+
       tables.forEach(async (table) => {
-        toolbox.print.success(
-          'Table' + baseProjectSrcPath + table.camelCasePluralName
-        );
+        await toolbox.template.generate({
+          template: `${templateModelsPath}/model.ts.ejs`,
+          target: `${targetModelsPath}/${table.kebabCaseSingularName}.model.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
       });
     } catch (error) {
       toolbox.print.error(error);
