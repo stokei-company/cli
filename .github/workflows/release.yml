@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 'release/*'
+    tags:
+      - '**'
+
+  workflow_dispatch:
+
+jobs:
+  CI:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prettify code
+        uses: creyD/prettier_action@v3.3
+        with:
+          # This part is also where you can pass other options, for example:
+          prettier_options: --write **/*.{js,ts,md}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Unit tests
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run test
+      - run: npm run build
+        env:
+          CI: true
+
+      - name: Getting version
+        id: versions-variables
+        run: |
+          echo ::set-output name=VERSION_NAME::${GITHUB_REF#refs/*/}
+          echo ::set-output name=VERSION_NUMBER::$(echo $GITHUB_REF | cut -d / -f 3 | awk '{sub(/v/,"")}1')
+
+      - name: Check output version
+        env:
+          RELEASE_VERSION: ${{ steps.versions-variables.outputs.VERSION_NAME }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.versions-variables.outputs.VERSION_NUMBER }}
+
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm version ${{ steps.versions-variables.outputs.VERSION_NUMBER }} --no-git-tag-version --force
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

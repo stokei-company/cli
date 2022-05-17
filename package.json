@@ -1,6 +1,6 @@
 {
   "name": "@stokei/cli",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Stokei CLI",
   "private": true,
   "types": "build/types/types.d.ts",
