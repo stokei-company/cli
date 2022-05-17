@@ -13,10 +13,28 @@ module.exports = (toolbox: Toolbox) => {
         projectName.kebabCasePluralName
       );
 
+      const templateSagasPath = `nestjs/src/sagas`;
+
+      const targetSagasPath = `${baseProjectSrcPath}/sagas`;
+
+      await toolbox.template.generate({
+        template: `${templateSagasPath}/index.ts.ejs`,
+        target: `${targetSagasPath}/index.ts`,
+        props: {
+          projectName,
+          tables
+        }
+      });
+
       tables.forEach(async (table) => {
-        toolbox.print.success(
-          'Table' + baseProjectSrcPath + table.camelCasePluralName
-        );
+        await toolbox.template.generate({
+          template: `${templateSagasPath}/saga.ts.ejs`,
+          target: `${targetSagasPath}/${table.kebabCasePluralName}.saga.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
       });
     } catch (error) {
       toolbox.print.error(error);

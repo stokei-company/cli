@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@stokei/services/accounts/database/prisma/client';
-import { IUpdatePasswordRepositoryDTO } from '@stokei/services/accounts/dtos/accounts/update-password-repository.dto';
+import { PrismaClient } from '@/database/prisma/client';
+import { IUpdatePasswordRepositoryDTO } from '@/dtos/accounts/update-password-repository.dto';
 import { IBaseRepository } from '@stokei/common';
 
 @Injectable()

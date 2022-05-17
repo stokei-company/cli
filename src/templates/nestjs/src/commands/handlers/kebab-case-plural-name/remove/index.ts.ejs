@@ -37,16 +37,11 @@ export class Remove<%= props.table.pascalCaseSingularName %>CommandHandler
     if (!removed) {
       throw new DataNotFoundException();
     }
-
-    const <%= props.table.camelCaseSingularName %>Removed = await this.find<%= props.table.pascalCaseSingularName %>ByIdRepository.execute(null);
-    if (!<%= props.table.camelCaseSingularName %>Removed) {
-      throw new <%= props.table.pascalCaseSingularName %>NotFoundException();
-    }
-    const <%= props.table.camelCaseSingularName %>Model = this.publisher.mergeObjectContext(<%= props.table.camelCaseSingularName %>Removed);
+    const <%= props.table.camelCaseSingularName %>Model = this.publisher.mergeObjectContext(<%= props.table.camelCaseSingularName %>);
     <%= props.table.camelCaseSingularName %>Model.removed();
     <%= props.table.camelCaseSingularName %>Model.commit();
 
-    return removed;
+    return <%= props.table.camelCaseSingularName %>;
   }
 
   private clearData(command: Remove<%= props.table.pascalCaseSingularName %>Command): Remove<%= props.table.pascalCaseSingularName %>Command {

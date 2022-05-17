@@ -1,0 +1,17 @@
+import { Remove<%= props.table.pascalCaseSingularName %>Command } from '@/commands/implements/<%= props.table.kebabCasePluralName %>/remove-<%= props.table.kebabCaseSingularName %>.command';
+import { Remove<%= props.table.pascalCaseSingularName %>DTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/remove-<%= props.table.kebabCaseSingularName %>.dto';
+import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
+import { Injectable } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { IBaseService } from '@stokei/nestjs';
+
+@Injectable()
+export class Remove<%= props.table.pascalCaseSingularName %>Service
+  implements IBaseService<Remove<%= props.table.pascalCaseSingularName %>DTO, Promise<<%= props.table.pascalCaseSingularName %>Model>>
+{
+  constructor(private readonly commandBus: CommandBus) {}
+
+  async execute(data: Remove<%= props.table.pascalCaseSingularName %>DTO): Promise<<%= props.table.pascalCaseSingularName %>Model> {
+    return await this.commandBus.execute(new Remove<%= props.table.pascalCaseSingularName %>Command(data));
+  }
+}

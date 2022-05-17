@@ -1,0 +1,71 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { Observable } from 'rxjs';
+import { map, delay } from 'rxjs/operators';
+import { <%= props.table.pascalCaseSingularName %>CreatedEvent } from '@/events/implements/<%= props.table.kebabCasePluralName %>/<%= props.table.kebabCaseSingularName %>-created.event';
+import { <%= props.table.pascalCaseSingularName %>RemovedEvent } from '@/events/implements/<%= props.table.kebabCasePluralName %>/<%= props.table.kebabCaseSingularName %>-removed.event';
+import { <%= props.table.pascalCaseSingularName %>UpdatedEvent } from '@/events/implements/<%= props.table.kebabCasePluralName %>/<%= props.table.kebabCaseSingularName %>-updated.event';
+
+@Injectable()
+export class <%= props.table.pascalCasePluralName %>Sagas {
+  private readonly logger: Logger;
+
+  constructor() {
+    this.logger = new Logger(<%= props.table.pascalCasePluralName %>Sagas.name);
+    this.logger.log(`Saga ${<%= props.table.pascalCasePluralName %>Sagas.name} init`);
+  }
+
+  @Saga()
+  <%= props.table.camelCaseSingularName %>Created = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(<%= props.table.pascalCaseSingularName %>CreatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [<%= props.table.pascalCaseSingularName %>CreatedEvent] Saga for example send a email'
+        );
+        this.logger.log(
+          'Inside [<%= props.table.pascalCaseSingularName %>CreatedEvent] Saga event <%= props.table.camelCaseSingularName %>Created: ' +
+            JSON.stringify(event)
+        );
+        return null;
+      })
+    );
+  };
+
+  @Saga()
+  <%= props.table.camelCaseSingularName %>Removed = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(<%= props.table.pascalCaseSingularName %>RemovedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [<%= props.table.pascalCaseSingularName %>RemovedEvent] Saga for example send a email'
+        );
+        this.logger.log(
+          'Inside [<%= props.table.pascalCaseSingularName %>RemovedEvent] Saga event <%= props.table.camelCaseSingularName %>Removed:' +
+            JSON.stringify(event)
+        );
+        return null;
+      })
+    );
+  };
+
+  @Saga()
+  <%= props.table.camelCaseSingularName %>Updated = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(<%= props.table.pascalCaseSingularName %>UpdatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [<%= props.table.pascalCaseSingularName %>UpdatedEvent] Saga for example send a email'
+        );
+        this.logger.log(
+          'Inside [<%= props.table.pascalCaseSingularName %>UpdatedEvent] Saga event <%= props.table.camelCaseSingularName %>Updated:' +
+            JSON.stringify(event)
+        );
+        return null;
+      })
+    );
+  };
+}

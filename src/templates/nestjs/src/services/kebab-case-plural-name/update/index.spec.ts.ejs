@@ -1,0 +1,30 @@
+import { CommandBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { Update<%= props.table.pascalCaseSingularName %>Service } from '.';
+
+describe('Update<%= props.table.pascalCaseSingularName %>Service', () => {
+  let update<%= props.table.pascalCaseSingularName %>Service: Update<%= props.table.pascalCaseSingularName %>Service;
+  let commandBus: CommandBus;
+
+  beforeEach(async () => {
+    const modRef = await Test.createTestingModule({
+      providers: [
+        Update<%= props.table.pascalCaseSingularName %>Service,
+        {
+          provide: CommandBus,
+          useValue: {
+            execute: jest.fn()
+          }
+        }
+      ]
+    }).compile();
+
+    update<%= props.table.pascalCaseSingularName %>Service = modRef.get(Update<%= props.table.pascalCaseSingularName %>Service);
+    commandBus = modRef.get(CommandBus);
+  });
+
+  it('should be defined', () => {
+    expect(update<%= props.table.pascalCaseSingularName %>Service).toBeDefined();
+    expect(commandBus).toBeDefined();
+  });
+});

@@ -1,8 +1,8 @@
 import { IBaseRepository } from '@stokei/common';
-import { mapOneAccessEntityToAccessModel } from '@stokei/services/accounts/mappers/access-entity-to-access-model';
-import { ICreateAccessMapperResponse } from '@stokei/services/accounts/mappers/create-access';
-import { AccessModel } from '@stokei/services/accounts/models/access.model';
-import { PrismaClient } from '@stokei/services/accounts/database/prisma/client';
+import { mapOneAccessEntityToAccessModel } from '@/mappers/access-entity-to-access-model';
+import { ICreateAccessMapperResponse } from '@/mappers/create-access';
+import { AccessModel } from '@/models/access.model';
+import { PrismaClient } from '@/database/prisma/client';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

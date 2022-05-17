@@ -46,7 +46,7 @@ export class Update<%= props.table.pascalCaseSingularName %>CommandHandler
     <%= props.table.camelCaseSingularName %>Model.updated();
     <%= props.table.camelCaseSingularName %>Model.commit();
 
-    return updated;
+    return <%= props.table.camelCaseSingularName %>Updated;
   }
 
   private clearData(command: Update<%= props.table.pascalCaseSingularName %>Command): Update<%= props.table.pascalCaseSingularName %>Command {

@@ -1,0 +1,16 @@
+import { Injectable } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { IBaseService } from '@stokei/common';
+import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
+import { Find<%= props.table.pascalCaseSingularName %>ByIdQuery } from '@/queries/implements/<%= props.table.kebabCasePluralName %>/find-<%= props.table.kebabCaseSingularName %>-by-id.query';
+
+@Injectable()
+export class Find<%= props.table.pascalCaseSingularName %>ByIdService
+  implements IBaseService<string, Promise<<%= props.table.pascalCaseSingularName %>Model>>
+{
+  constructor(private readonly queryBus: QueryBus) {}
+
+  async execute(data: string): Promise<<%= props.table.pascalCaseSingularName %>Model> {
+    return await this.queryBus.execute(new Find<%= props.table.pascalCaseSingularName %>ByIdQuery(data));
+  }
+}

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@stokei/services/accounts/database/prisma/client';
+import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/common';
-import { mapManyAccountEntityToAccountModel } from '@stokei/services/accounts/mappers/account-entity-to-account-model';
-import { AccountModel } from '@stokei/services/accounts/models/account.model';
+import { mapManyAccountEntityToAccountModel } from '@/mappers/account-entity-to-account-model';
+import { AccountModel } from '@/models/account.model';
 
 @Injectable()
 export class FindAccountByIdsRepository

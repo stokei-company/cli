@@ -1,0 +1,30 @@
+import { CommandBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { Remove<%= props.table.pascalCaseSingularName %>Service } from '.';
+
+describe('Remove<%= props.table.pascalCaseSingularName %>Service', () => {
+  let remove<%= props.table.pascalCaseSingularName %>Service: Remove<%= props.table.pascalCaseSingularName %>Service;
+  let commandBus: CommandBus;
+
+  beforeEach(async () => {
+    const modRef = await Test.createTestingModule({
+      providers: [
+        Remove<%= props.table.pascalCaseSingularName %>Service,
+        {
+          provide: CommandBus,
+          useValue: {
+            execute: jest.fn()
+          }
+        }
+      ]
+    }).compile();
+
+    remove<%= props.table.pascalCaseSingularName %>Service = modRef.get(Remove<%= props.table.pascalCaseSingularName %>Service);
+    commandBus = modRef.get(CommandBus);
+  });
+
+  it('should be defined', () => {
+    expect(remove<%= props.table.pascalCaseSingularName %>Service).toBeDefined();
+    expect(commandBus).toBeDefined();
+  });
+});

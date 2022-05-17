@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@stokei/services/accounts/database/prisma/client';
+import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/common';
-import { IRefreshAccessMapperData } from '@stokei/services/accounts/mappers/refresh-access';
+import { IRefreshAccessMapperData } from '@/mappers/refresh-access';
 import { convertToISODate } from '@stokei/shared';
 
 @Injectable()

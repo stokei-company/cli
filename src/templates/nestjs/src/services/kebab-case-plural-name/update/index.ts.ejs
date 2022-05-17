@@ -1,0 +1,17 @@
+import { Update<%= props.table.pascalCaseSingularName %>Command } from '@/commands/implements/<%= props.table.kebabCasePluralName %>/update-<%= props.table.kebabCaseSingularName %>.command';
+import { Update<%= props.table.pascalCaseSingularName %>DTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/update-<%= props.table.kebabCaseSingularName %>.dto';
+import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
+import { Injectable } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { IBaseService } from '@stokei/nestjs';
+
+@Injectable()
+export class Update<%= props.table.pascalCaseSingularName %>Service
+  implements IBaseService<Update<%= props.table.pascalCaseSingularName %>DTO, Promise<<%= props.table.pascalCaseSingularName %>Model>>
+{
+  constructor(private readonly commandBus: CommandBus) {}
+
+  async execute(data: Update<%= props.table.pascalCaseSingularName %>DTO): Promise<<%= props.table.pascalCaseSingularName %>Model> {
+    return await this.commandBus.execute(new Update<%= props.table.pascalCaseSingularName %>Command(data));
+  }
+}

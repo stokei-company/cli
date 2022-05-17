@@ -1,0 +1,30 @@
+import { QueryBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { Find<%= props.table.pascalCaseSingularName %>ByIdService } from '.';
+
+describe('Find<%= props.table.pascalCaseSingularName %>ByIdService', () => {
+  let find<%= props.table.pascalCaseSingularName %>ByIdService: Find<%= props.table.pascalCaseSingularName %>ByIdService;
+  let queryBus: QueryBus;
+
+  beforeEach(async () => {
+    const modRef = await Test.createTestingModule({
+      providers: [
+        Find<%= props.table.pascalCaseSingularName %>ByIdService,
+        {
+          provide: QueryBus,
+          useValue: {
+            execute: jest.fn()
+          }
+        }
+      ]
+    }).compile();
+
+    find<%= props.table.pascalCaseSingularName %>ByIdService = modRef.get(Find<%= props.table.pascalCaseSingularName %>ByIdService);
+    queryBus = modRef.get(QueryBus);
+  });
+
+  it('should be defined', () => {
+    expect(find<%= props.table.pascalCaseSingularName %>ByIdService).toBeDefined();
+    expect(queryBus).toBeDefined();
+  });
+});

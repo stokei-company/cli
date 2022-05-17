@@ -1,0 +1,16 @@
+import { Injectable } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { IBaseService } from '@stokei/common';
+import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/account.model';
+import { FindAll<%= props.table.pascalCasePluralName %>Query } from '@/queries/implements/<%= props.table.kebabCasePluralName %>/find-all-<%= props.table.kebabCasePluralName %>.query';
+
+@Injectable()
+export class FindAll<%= props.table.pascalCasePluralName %>Service
+  implements IBaseService<string[], Promise<<%= props.table.pascalCaseSingularName %>Model[]>>
+{
+  constructor(private readonly queryBus: QueryBus) {}
+
+  async execute(data: string[]): Promise<<%= props.table.pascalCaseSingularName %>Model[]> {
+    return await this.queryBus.execute(new FindAll<%= props.table.pascalCasePluralName %>Query(data));
+  }
+}

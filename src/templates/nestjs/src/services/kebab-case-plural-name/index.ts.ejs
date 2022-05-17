@@ -1,0 +1,13 @@
+import { Find<%= props.table.pascalCaseSingularName %>ByIdService } from './find-<%= props.table.kebabCaseSingularName %>-by-id';
+import { FindAll<%= props.table.pascalCasePluralName %>Service } from './find-all-<%= props.table.kebabCasePluralName %>';
+import { Create<%= props.table.pascalCaseSingularName %>Service } from './create-<%= props.table.kebabCaseSingularName %>';
+import { Remove<%= props.table.pascalCaseSingularName %>Service } from './remove-<%= props.table.kebabCaseSingularName %>';
+import { Update<%= props.table.pascalCaseSingularName %>Service } from './update-<%= props.table.kebabCaseSingularName %>';
+
+export const <%= props.table.pascalCaseSingularName %>Services = [
+  Create<%= props.table.pascalCaseSingularName %>Service,
+  Remove<%= props.table.pascalCaseSingularName %>Service,
+  Update<%= props.table.pascalCaseSingularName %>Service,
+  Find<%= props.table.pascalCaseSingularName %>ByIdService,
+  FindAll<%= props.table.pascalCasePluralName %>Service
+];
