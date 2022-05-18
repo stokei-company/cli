@@ -1,12 +1,14 @@
-import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
+import { IBaseFindManyDTO, IOrderBy, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 
 export interface WhereDataFindAll<%= props.table.pascalCasePluralName %>DTO {
   ids?: string[];
   parent?: IWhereData;
+  name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAll<%= props.table.pascalCasePluralName %>DTO = keyof WhereDataFindAll<%= props.table.pascalCasePluralName %>DTO;
 
 export interface OrderByDataFindAll<%= props.table.pascalCasePluralName %>DTO {
+  name?: IOrderBy;
   createdAt?: IOrderBy;
   updatedAt?: IOrderBy;
 }

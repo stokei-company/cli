@@ -7,7 +7,7 @@ import {
 } from '@/errors';
 import { Find<%= props.table.pascalCaseSingularName %>ByIdRepository } from '@/repositories/<%= props.table.kebabCasePluralName %>/find-<%= props.table.kebabCaseSingularName %>-by-id';
 import { Remove<%= props.table.pascalCaseSingularName %>Repository } from '@/repositories/<%= props.table.kebabCasePluralName %>/remove-<%= props.table.kebabCaseSingularName %>';
-import { cleanObject } from '@stokei/nestjs';
+import { cleanObject, splitServiceId } from '@stokei/nestjs';
 
 type Remove<%= props.table.pascalCaseSingularName %>CommandKeys = keyof Remove<%= props.table.pascalCaseSingularName %>Command;
 
@@ -22,23 +22,29 @@ export class Remove<%= props.table.pascalCaseSingularName %>CommandHandler
   ) {}
 
   async execute(command: Remove<%= props.table.pascalCaseSingularName %>Command) {
-    if (!command) {
+    const data = this.clearData(command);
+    if (!data) {
       throw new DataNotFoundException();
     }
-
-    const data = this.clearData(command);
-
-    const <%= props.table.camelCaseSingularName %> = await this.find<%= props.table.pascalCaseSingularName %>ByIdRepository.execute(null);
+    const <%= props.table.camelCaseSingularName %>Id = splitServiceId(data.where?.<%= props.table.camelCaseSingularName %>Id)?.id;
+    if (!<%= props.table.camelCaseSingularName %>Id) {
+      throw new ParamNotFoundException('<%= props.table.camelCaseSingularName %>Id');
+    }
+    const <%= props.table.camelCaseSingularName %> = await this.find<%= props.table.pascalCaseSingularName %>ByIdRepository.execute(<%= props.table.camelCaseSingularName %>Id);
     if (!<%= props.table.camelCaseSingularName %>) {
       throw new <%= props.table.pascalCaseSingularName %>NotFoundException();
     }
 
-    const removed = await this.remove<%= props.table.pascalCaseSingularName %>Repository.execute(null);
+    const removed = await this.remove<%= props.table.pascalCaseSingularName %>Repository.execute({
+      where: {
+        <%= props.table.camelCaseSingularName %>Id,
+      }
+    });
     if (!removed) {
       throw new DataNotFoundException();
     }
     const <%= props.table.camelCaseSingularName %>Model = this.publisher.mergeObjectContext(<%= props.table.camelCaseSingularName %>);
-    <%= props.table.camelCaseSingularName %>Model.removed();
+    <%= props.table.camelCaseSingularName %>Model.removed<%= props.table.pascalCaseSingularName %>();
     <%= props.table.camelCaseSingularName %>Model.commit();
 
     return <%= props.table.camelCaseSingularName %>;

@@ -1,0 +1,20 @@
+import { Injectable } from '@nestjs/common';
+import { PrismaClient } from '@/database/prisma/client';
+import { IBaseRepository } from '@stokei/nestjs';
+import { <%= props.table.pascalCaseSingularName %>Mapper } from '@/mappers/<%= props.table.kebabCasePluralName %>';
+import { Create<%= props.table.pascalCaseSingularName %>DTO } from '@/dtos/create-<%= props.table.kebabCaseSingularName %>.dto';
+import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
+
+@Injectable()
+export class Create<%= props.table.pascalCaseSingularName %>Repository
+  implements
+    IBaseRepository<Create<%= props.table.pascalCaseSingularName %>DTO, Promise<<%= props.table.pascalCaseSingularName %>Model>>
+{
+  constructor(private readonly model: PrismaClient) {}
+
+  async execute(data: Create<%= props.table.pascalCaseSingularName %>DTO): Promise<<%= props.table.pascalCaseSingularName %>Model> {
+    return new <%= props.table.pascalCaseSingularName %>Mapper().toModel(
+      await this.model.<%= props.table.camelCaseSingularName %>.create({ data })
+    );
+  }
+}

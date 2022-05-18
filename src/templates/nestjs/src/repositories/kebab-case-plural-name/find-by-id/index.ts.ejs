@@ -1,0 +1,20 @@
+import { Injectable } from '@nestjs/common';
+import { IBaseRepository } from '@stokei/nestjs';
+import { PrismaClient } from '@/database/prisma/client';
+import { <%= props.table.pascalCaseSingularName %>Mapper } from '@/mappers/<%= props.table.kebabCasePluralName %>';
+import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
+
+@Injectable()
+export class Find<%= props.table.pascalCaseSingularName %>ByIdRepository
+  implements IBaseRepository<string, Promise<<%= props.table.pascalCaseSingularName %>Model>>
+{
+  constructor(private readonly model: PrismaClient) {}
+
+  async execute(id: string): Promise<<%= props.table.pascalCaseSingularName %>Model> {
+    return new <%= props.table.pascalCaseSingularName %>Mapper().toModel(
+      await this.model.<%= props.table.camelCaseSingularName %>.findUnique({
+        where: { id }
+      })
+    );
+  }
+}

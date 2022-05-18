@@ -1,0 +1,23 @@
+import { Injectable } from '@nestjs/common';
+import { PrismaClient } from '@/database/prisma/client';
+import { IBaseRepository } from '@stokei/nestjs';
+import { <%= props.table.pascalCaseSingularName %>Mapper } from '@/mappers/<%= props.table.kebabCasePluralName %>';
+import { Remove<%= props.table.pascalCaseSingularName %>DTO } from '@/dtos/remove-<%= props.table.kebabCaseSingularName %>.dto';
+import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
+
+@Injectable()
+export class Remove<%= props.table.pascalCaseSingularName %>Repository
+  implements
+    IBaseRepository<Remove<%= props.table.pascalCaseSingularName %>DTO, Promise<<%= props.table.pascalCaseSingularName %>Model>>
+{
+  constructor(private readonly model: PrismaClient) {}
+
+  async execute({ where }: Remove<%= props.table.pascalCaseSingularName %>DTO): Promise<<%= props.table.pascalCaseSingularName %>Model> {
+    const removed = await this.model.<%= props.table.camelCaseSingularName %>.delete({
+      where: {
+        id: where?.<%= props.table.camelCaseSingularName %>Id
+      },
+    });
+    return !!removed;
+  }
+}

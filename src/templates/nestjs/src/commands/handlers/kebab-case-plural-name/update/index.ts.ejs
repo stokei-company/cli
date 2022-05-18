@@ -43,7 +43,7 @@ export class Update<%= props.table.pascalCaseSingularName %>CommandHandler
       throw new <%= props.table.pascalCaseSingularName %>NotFoundException();
     }
     const <%= props.table.camelCaseSingularName %>Model = this.publisher.mergeObjectContext(<%= props.table.camelCaseSingularName %>Updated);
-    <%= props.table.camelCaseSingularName %>Model.updated();
+    <%= props.table.camelCaseSingularName %>Model.updated<%= props.table.pascalCaseSingularName %>();
     <%= props.table.camelCaseSingularName %>Model.commit();
 
     return <%= props.table.camelCaseSingularName %>Updated;

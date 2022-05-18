@@ -12,11 +12,88 @@ module.exports = (toolbox: Toolbox) => {
       const baseProjectSrcPath = getBaseProjectSrcPath(
         projectName.kebabCasePluralName
       );
+      const templateRepositoriesPath = `nestjs/src/repositories`;
+
+      const targetRepositoriesPath = `${baseProjectSrcPath}/repositories`;
+
+      await toolbox.template.generate({
+        template: `${templateRepositoriesPath}/index.ts.ejs`,
+        target: `${targetRepositoriesPath}/index.ts`,
+        props: {
+          projectName,
+          tables
+        }
+      });
 
       tables.forEach(async (table) => {
-        toolbox.print.success(
-          'Table' + baseProjectSrcPath + table.camelCasePluralName
-        );
+        const tableTemplateRepositoriesPath = `${templateRepositoriesPath}/repositories/kebab-case-plural-name`;
+
+        const tableTargetRepositoriesPath = `${targetRepositoriesPath}/repositories/${table.kebabCasePluralName}`;
+
+        await toolbox.template.generate({
+          template: `${tableTemplateRepositoriesPath}/index.ts.ejs`,
+          target: `${tableTargetRepositoriesPath}/index.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template: `${tableTemplateRepositoriesPath}/count/index.ts.ejs`,
+          target: `${tableTargetRepositoriesPath}/count-${table.kebabCasePluralName}/index.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template: `${tableTemplateRepositoriesPath}/create/index.ts.ejs`,
+          target: `${tableTargetRepositoriesPath}/create-${table.kebabCaseSingularName}/index.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template: `${tableTemplateRepositoriesPath}/exists/index.ts.ejs`,
+          target: `${tableTargetRepositoriesPath}/exists-${table.kebabCasePluralName}/index.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template: `${tableTemplateRepositoriesPath}/find-all/index.ts.ejs`,
+          target: `${tableTargetRepositoriesPath}/find-all-${table.kebabCasePluralName}/index.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template: `${tableTemplateRepositoriesPath}/find-by-id/index.ts.ejs`,
+          target: `${tableTargetRepositoriesPath}/find-${table.kebabCaseSingularName}-by-id/index.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template: `${tableTemplateRepositoriesPath}/remove/index.ts.ejs`,
+          target: `${tableTargetRepositoriesPath}/remove-${table.kebabCaseSingularName}/index.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
+        await toolbox.template.generate({
+          template: `${tableTemplateRepositoriesPath}/update/index.ts.ejs`,
+          target: `${tableTargetRepositoriesPath}/update-${table.kebabCaseSingularName}/index.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
       });
     } catch (error) {
       toolbox.print.error(error);

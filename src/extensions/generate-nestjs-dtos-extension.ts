@@ -54,6 +54,14 @@ module.exports = (toolbox: Toolbox) => {
             table
           }
         });
+        await toolbox.template.generate({
+          template: 'nestjs/src/dtos/remove.dto.ts.ejs',
+          target: `${baseProjectSrcPath}/dtos/${table.kebabCasePluralName}/remove-${table.kebabCaseSingularName}.dto.ts`,
+          props: {
+            projectName,
+            table
+          }
+        });
       });
     } catch (error) {
       toolbox.print.error(error);

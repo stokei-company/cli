@@ -20,15 +20,17 @@ export class Create<%= props.table.pascalCaseSingularName %>CommandHandler
   ) {}
 
   async execute(command: Create<%= props.table.pascalCaseSingularName %>Command) {
-    if (!command) {
+    const data = this.clearData(command);
+    if (!data) {
       throw new DataNotFoundException();
     }
 
-    const data = this.clearData(command);
-
-    const <%= props.table.camelCaseSingularName %>Created = null;
+    const <%= props.table.camelCaseSingularName %>Created = await this.create<%= props.table.pascalCaseSingularName %>Repository.execute(data);
+    if (!<%= props.table.camelCaseSingularName %>Created) {
+      throw new <%= props.table.pascalCaseSingularName %>NotFoundException();
+    }
     const <%= props.table.camelCaseSingularName %>Model = this.publisher.mergeObjectContext(<%= props.table.camelCaseSingularName %>Created);
-    <%= props.table.camelCaseSingularName %>Model.created();
+    <%= props.table.camelCaseSingularName %>Model.created<%= props.table.pascalCaseSingularName %>();
     <%= props.table.camelCaseSingularName %>Model.commit();
 
     return created;
