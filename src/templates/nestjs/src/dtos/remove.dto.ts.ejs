@@ -1,7 +1,7 @@
-export interface Remove<%= props.table.pascalCasePluralName %>WhereDTO {
+export interface Remove<%= props.table.pascalCaseSingularName %>WhereDTO {
   <%= props.table.camelCaseSingularName %>Id: string;
 }
 
-export interface Remove<%= props.table.pascalCasePluralName %>DTO {
-  where: Remove<%= props.table.pascalCasePluralName %>WhereDTO;
+export interface Remove<%= props.table.pascalCaseSingularName %>DTO {
+  where: Remove<%= props.table.pascalCaseSingularName %>WhereDTO;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { IBaseService } from '@stokei/common';
+import { IBaseService } from '@stokei/nestjs';
 import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
 import { Find<%= props.table.pascalCaseSingularName %>ByIdQuery } from '@/queries/implements/<%= props.table.kebabCasePluralName %>/find-<%= props.table.kebabCaseSingularName %>-by-id.query';
 

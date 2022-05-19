@@ -1,17 +1,17 @@
-import { Count<%= table.pascalCasePluralName %>Repository } from './count-<%= table.kebabCasePluralName %>';
-import { Create<%= table.pascalCaseSingularName %>Repository } from './create-<%= table.kebabCaseSingularName %>';
-import { Exists<%= table.pascalCasePluralName %>Repository } from './exists-<%= table.kebabCasePluralName %>';
-import { Find<%= table.pascalCaseSingularName %>ByIdRepository } from './find-<%= table.kebabCaseSingularName %>-by-id';
-import { FindAll<%= table.pascalCasePluralName %>Repository } from './find-all-<%= table.kebabCasePluralName %>';
-import { Remove<%= table.pascalCaseSingularName %>Repository } from './remove-<%= table.kebabCaseSingularName %>';
-import { Update<%= table.pascalCaseSingularName %>Repository } from './update-<%= table.kebabCaseSingularName %>';
+import { Count<%= props.table.pascalCasePluralName %>Repository } from './count-<%= props.table.kebabCasePluralName %>';
+import { Create<%= props.table.pascalCaseSingularName %>Repository } from './create-<%= props.table.kebabCaseSingularName %>';
+import { Exists<%= props.table.pascalCasePluralName %>Repository } from './exists-<%= props.table.kebabCasePluralName %>';
+import { Find<%= props.table.pascalCaseSingularName %>ByIdRepository } from './find-<%= props.table.kebabCaseSingularName %>-by-id';
+import { FindAll<%= props.table.pascalCasePluralName %>Repository } from './find-all-<%= props.table.kebabCasePluralName %>';
+import { Remove<%= props.table.pascalCaseSingularName %>Repository } from './remove-<%= props.table.kebabCaseSingularName %>';
+import { Update<%= props.table.pascalCaseSingularName %>Repository } from './update-<%= props.table.kebabCaseSingularName %>';
 
-export const <%= table.pascalCasePluralName %>Repositories = [
-  Count<%= table.pascalCasePluralName %>Repository,
-  Create<%= table.pascalCaseSingularName %>Repository,
-  Exists<%= table.pascalCasePluralName %>Repository,
-  Find<%= table.pascalCaseSingularName %>ByIdRepository,
-  FindAll<%= table.pascalCasePluralName %>Repository,
-  Remove<%= table.pascalCaseSingularName %>Repository,
-  Update<%= table.pascalCaseSingularName %>Repository
+export const <%= props.table.pascalCasePluralName %>Repositories = [
+  Count<%= props.table.pascalCasePluralName %>Repository,
+  Create<%= props.table.pascalCaseSingularName %>Repository,
+  Exists<%= props.table.pascalCasePluralName %>Repository,
+  Find<%= props.table.pascalCaseSingularName %>ByIdRepository,
+  FindAll<%= props.table.pascalCasePluralName %>Repository,
+  Remove<%= props.table.pascalCaseSingularName %>Repository,
+  Update<%= props.table.pascalCaseSingularName %>Repository
 ];

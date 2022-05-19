@@ -3,13 +3,13 @@ import { InputType, Field } from '@nestjs/graphql';
 @InputType()
 export class UpdateData<%= props.table.pascalCaseSingularName %>Input {
   @Field()
-  parent: string;
+  name: string;
 }
 
 @InputType()
 export class UpdateWhere<%= props.table.pascalCaseSingularName %>Input {
   @Field()
-  parent: string;
+  name: string;
 }
 
 @InputType()

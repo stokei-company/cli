@@ -26,9 +26,9 @@ module.exports = (toolbox: Toolbox) => {
       });
 
       tables.forEach(async (table) => {
-        const tableTemplateServicesPath = `${templateServicesPath}/services/kebab-case-plural-name`;
+        const tableTemplateServicesPath = `${templateServicesPath}/kebab-case-plural-name`;
 
-        const tableTargetServicesPath = `${targetServicesPath}/services/${table.kebabCasePluralName}`;
+        const tableTargetServicesPath = `${targetServicesPath}/${table.kebabCasePluralName}`;
 
         await toolbox.template.generate({
           template: `${tableTemplateServicesPath}/index.ts.ejs`,

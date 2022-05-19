@@ -42,7 +42,7 @@ module.exports = (toolbox: Toolbox) => {
         await toolbox.template.generate({
           template:
             'nestjs/src/errors/kebab-case-singular-name-not-found/index.ts.ejs',
-          target: `${baseProjectSrcPath}/errors/${table.kebabCaseSingularName}-not-found/index.ts.ejs`,
+          target: `${baseProjectSrcPath}/errors/${table.kebabCaseSingularName}-not-found/index.ts`,
           props: {
             projectName,
             table
@@ -51,7 +51,7 @@ module.exports = (toolbox: Toolbox) => {
         await toolbox.template.generate({
           template:
             'nestjs/src/errors/kebab-case-plural-name-not-found/index.ts.ejs',
-          target: `${baseProjectSrcPath}/errors/${table.kebabCasePluralName}-not-found/index.ts.ejs`,
+          target: `${baseProjectSrcPath}/errors/${table.kebabCasePluralName}-not-found/index.ts`,
           props: {
             projectName,
             table

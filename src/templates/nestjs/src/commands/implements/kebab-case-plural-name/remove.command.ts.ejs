@@ -1,8 +1,9 @@
 import { ICommand } from '@nestjs/cqrs';
-import { Remove<%= props.table.pascalCaseSingularName %>DTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/remove-<%= props.table.kebabCaseSingularName %>.dto';
+import { Remove<%= props.table.pascalCaseSingularName %>DTO, Remove<%= props.table.pascalCaseSingularName %>WhereDTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/remove-<%= props.table.kebabCaseSingularName %>.dto';
 
 export class Remove<%= props.table.pascalCaseSingularName %>Command implements ICommand, Remove<%= props.table.pascalCaseSingularName %>DTO {
+  where: Remove<%= props.table.pascalCaseSingularName %>WhereDTO;
   constructor(data: Remove<%= props.table.pascalCaseSingularName %>DTO) {
-    Object.assign(this, data);
+    this.where = data.where;
   }
 }

@@ -22,8 +22,8 @@ export class <%= props.table.pascalCaseSingularName %>Model extends AggregateRoo
     super();
 
     this.id = createServiceId({
-      service: Server<%= props.table.pascalCaseSingularName %>IdPrefix.ACCOUNTS,
-      module: Server<%= props.table.pascalCaseSingularName %>IdPrefix.ACCOUNTS,
+      service: Server<%= props.table.pascalCaseSingularName %>IdPrefix.<%= props.table.snakeUpperCasePluralName %>,
+      module: Server<%= props.table.pascalCaseSingularName %>IdPrefix.<%= props.table.snakeUpperCasePluralName %>,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;

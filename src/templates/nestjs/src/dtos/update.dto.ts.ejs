@@ -1,12 +1,12 @@
-export interface IUpdate<%= props.table.pascalCaseSingularName %>DataDTO {
-  updatedAt?: string;
+export interface Update<%= props.table.pascalCaseSingularName %>DataDTO {
+  name?: string;
 }
 
-export interface IUpdate<%= props.table.pascalCaseSingularName %>WhereDTO {
+export interface Update<%= props.table.pascalCaseSingularName %>WhereDTO {
   <%= props.table.camelCaseSingularName %>Id: string;
 }
 
-export interface IUpdate<%= props.table.pascalCaseSingularName %>DTO {
-  data: IUpdate<%= props.table.pascalCaseSingularName %>DataDTO;
-  where: IUpdate<%= props.table.pascalCaseSingularName %>WhereDTO;
+export interface Update<%= props.table.pascalCaseSingularName %>DTO {
+  data: Update<%= props.table.pascalCaseSingularName %>DataDTO;
+  where: Update<%= props.table.pascalCaseSingularName %>WhereDTO;
 }

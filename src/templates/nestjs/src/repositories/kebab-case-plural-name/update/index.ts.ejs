@@ -1,18 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { <%= props.table.pascalCaseSingularName %>Mapper } from '@/mappers/<%= props.table.kebabCasePluralName %>';
-import { Update<%= props.table.pascalCaseSingularName %>DTO } from '@/dtos/update-<%= props.table.kebabCaseSingularName %>.dto';
-import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
+import { Update<%= props.table.pascalCaseSingularName %>DTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/update-<%= props.table.kebabCaseSingularName %>.dto';
 
 @Injectable()
 export class Update<%= props.table.pascalCaseSingularName %>Repository
   implements
-    IBaseRepository<Update<%= props.table.pascalCaseSingularName %>DTO, Promise<<%= props.table.pascalCaseSingularName %>Model>>
+    IBaseRepository<Update<%= props.table.pascalCaseSingularName %>DTO, Promise<boolean>>
 {
   constructor(private readonly model: PrismaClient) {}
 
-  async execute({ data, where }: Update<%= props.table.pascalCaseSingularName %>DTO): Promise<<%= props.table.pascalCaseSingularName %>Model> {
+  async execute({ data, where }: Update<%= props.table.pascalCaseSingularName %>DTO): Promise<boolean> {
     const updated = await this.model.<%= props.table.camelCaseSingularName %>.update({
       where: {
         id: where?.<%= props.table.camelCaseSingularName %>Id

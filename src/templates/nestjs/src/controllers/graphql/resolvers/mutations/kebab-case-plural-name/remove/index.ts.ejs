@@ -16,10 +16,7 @@ export class Remove<%= props.table.pascalCaseSingularName %>Resolver {
     @Args('input') data: Remove<%= props.table.pascalCaseSingularName %>Input,
     @CurrentProject('id') projectId: string
   ) {
-    const response = await this.remove<%= props.table.pascalCaseSingularName %>Service.execute({
-      ...data,
-      parent: projectId
-    });
+    const response = await this.remove<%= props.table.pascalCaseSingularName %>Service.execute(data);
     return response;
   }
 }

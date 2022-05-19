@@ -43,7 +43,8 @@ const command: GluegunCommand = {
       */
       toolbox.print.success('Command is finished!');
     } catch (error) {
-      toolbox.print.error('Ocorreu um erro com na execução do comando!');
+      toolbox.print.error(error.message);
+      toolbox.print.error('Ocorreu um erro na execução do comando!');
     }
   }
 };

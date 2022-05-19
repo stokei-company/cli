@@ -30,6 +30,7 @@ export class Remove<%= props.table.pascalCaseSingularName %>CommandHandler
     if (!<%= props.table.camelCaseSingularName %>Id) {
       throw new ParamNotFoundException('<%= props.table.camelCaseSingularName %>Id');
     }
+    
     const <%= props.table.camelCaseSingularName %> = await this.find<%= props.table.pascalCaseSingularName %>ByIdRepository.execute(<%= props.table.camelCaseSingularName %>Id);
     if (!<%= props.table.camelCaseSingularName %>) {
       throw new <%= props.table.pascalCaseSingularName %>NotFoundException();

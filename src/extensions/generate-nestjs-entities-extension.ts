@@ -4,7 +4,7 @@ import { GenerateNestJSConfig } from '../interfaces/generate-command.interface';
 import { Toolbox } from '../interfaces/toolbox.interface';
 
 module.exports = (toolbox: Toolbox) => {
-  toolbox.generateNestJSServices = async ({
+  toolbox.generateNestJSEntities = async ({
     projectName,
     tables
   }: GenerateNestJSConfig) => {

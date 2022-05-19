@@ -1,8 +1,15 @@
 import { ICommand } from '@nestjs/cqrs';
-import { Update<%= props.table.pascalCaseSingularName %>DTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/update-<%= props.table.kebabCaseSingularName %>.dto';
+import {
+  Update<%= props.table.pascalCaseSingularName %>DTO,
+  Update<%= props.table.pascalCaseSingularName %>DataDTO,
+  Update<%= props.table.pascalCaseSingularName %>WhereDTO
+} from '@/dtos/<%= props.table.kebabCasePluralName %>/update-<%= props.table.kebabCaseSingularName %>.dto';
 
 export class Update<%= props.table.pascalCaseSingularName %>Command implements ICommand, Update<%= props.table.pascalCaseSingularName %>DTO {
+  data: Update<%= props.table.pascalCaseSingularName %>DataDTO;
+  where: Update<%= props.table.pascalCaseSingularName %>WhereDTO;
   constructor(data: Update<%= props.table.pascalCaseSingularName %>DTO) {
-    Object.assign(this, data);
+    this.data = data.data;
+    this.where = data.where;
   }
 }

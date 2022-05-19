@@ -16,10 +16,7 @@ export class Update<%= props.table.pascalCaseSingularName %>Resolver {
     @Args('input') data: Update<%= props.table.pascalCaseSingularName %>Input,
     @CurrentProject('id') projectId: string
   ) {
-    const response = await this.update<%= props.table.pascalCaseSingularName %>Service.execute({
-      ...data,
-      parent: projectId
-    });
+    const response = await this.update<%= props.table.pascalCaseSingularName %>Service.execute(data);
     return response;
   }
 }

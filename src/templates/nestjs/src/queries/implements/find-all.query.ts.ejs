@@ -1,8 +1,19 @@
 import { IQuery } from '@nestjs/cqrs';
-import { FindAll<%= props.table.pascalCasePluralName %>DTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/find-all-<%= props.table.kebabCasePluralName %>.dto'
+import { IPaginatinInputDTO, IWhere } from '@stokei/nestjs';
+import {
+  FindAll<%= props.table.pascalCasePluralName %>DTO,
+  WhereDataFindAll<%= props.table.pascalCasePluralName %>DTO,
+  OrderByDataFindAll<%= props.table.pascalCasePluralName %>DTO
+} from '@/dtos/<%= props.table.kebabCasePluralName %>/find-all-<%= props.table.kebabCasePluralName %>.dto';
 
-export class Find<%= props.table.pascalCaseSingularName %>ByIdQuery implements IQuery, FindAll<%= props.table.pascalCasePluralName %>DTO {
+export class FindAll<%= props.table.pascalCasePluralName %>Query implements IQuery, FindAll<%= props.table.pascalCasePluralName %>DTO {
+  where?: IWhere<WhereDataFindAll<%= props.table.pascalCasePluralName %>DTO>;
+  page?: IPaginatinInputDTO;
+  orderBy?: OrderByDataFindAll<%= props.table.pascalCasePluralName %>DTO;
+
   constructor(data: FindAll<%= props.table.pascalCasePluralName %>DTO) {
-    Object.assign(this, data);
+    this.where = data.where;
+    this.page = data.page;
+    this.orderBy = data.orderBy;
   }
 }

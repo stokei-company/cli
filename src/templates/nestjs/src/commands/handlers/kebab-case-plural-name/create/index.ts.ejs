@@ -24,6 +24,9 @@ export class Create<%= props.table.pascalCaseSingularName %>CommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data?.parent) {
+      throw new ParamNotFoundException<Create<%= props.table.pascalCaseSingularName %>CommandKeys>('parent');
+    }
 
     const <%= props.table.camelCaseSingularName %>Created = await this.create<%= props.table.pascalCaseSingularName %>Repository.execute(data);
     if (!<%= props.table.camelCaseSingularName %>Created) {
@@ -33,7 +36,7 @@ export class Create<%= props.table.pascalCaseSingularName %>CommandHandler
     <%= props.table.camelCaseSingularName %>Model.created<%= props.table.pascalCaseSingularName %>();
     <%= props.table.camelCaseSingularName %>Model.commit();
 
-    return created;
+    return <%= props.table.camelCaseSingularName %>Created;
   }
 
   private clearData(command: Create<%= props.table.pascalCaseSingularName %>Command): Create<%= props.table.pascalCaseSingularName %>Command {

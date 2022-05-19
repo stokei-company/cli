@@ -32,7 +32,7 @@ module.exports = (toolbox: Toolbox) => {
 
       tables.forEach(async (table) => {
         await toolbox.template.generate({
-          template: `${templateQueriesHandlersPath}/kebab-case-plural-name/kebab-case-plural-name/index.ts.ejs`,
+          template: `${templateQueriesHandlersPath}/kebab-case-plural-name/index.ts.ejs`,
           target: `${targetQueriesHandlersPath}/${table.kebabCasePluralName}/index.ts`,
           props: {
             projectName,
@@ -57,7 +57,7 @@ module.exports = (toolbox: Toolbox) => {
         });
         await toolbox.template.generate({
           template: `${templateQueriesHandlersPath}/kebab-case-plural-name/find-all/index.ts.ejs`,
-          target: `${targetQueriesHandlersPath}/${table.kebabCasePluralName}/find-${table.kebabCasePluralName}-all/index.ts`,
+          target: `${targetQueriesHandlersPath}/${table.kebabCasePluralName}/find-all-${table.kebabCasePluralName}/index.ts`,
           props: {
             projectName,
             table
@@ -65,7 +65,7 @@ module.exports = (toolbox: Toolbox) => {
         });
         await toolbox.template.generate({
           template: `${templateQueriesHandlersPath}/kebab-case-plural-name/find-all/index.spec.ts.ejs`,
-          target: `${targetQueriesHandlersPath}/${table.kebabCasePluralName}/find-${table.kebabCasePluralName}-all/index.spec.ts`,
+          target: `${targetQueriesHandlersPath}/${table.kebabCasePluralName}/find-all-${table.kebabCasePluralName}/index.spec.ts`,
           props: {
             projectName,
             table
@@ -82,7 +82,7 @@ module.exports = (toolbox: Toolbox) => {
         });
         await toolbox.template.generate({
           template: `${templateQueriesImplementsPath}/find-all.query.ts.ejs`,
-          target: `${targetQueriesImplementsPath}/${table.kebabCasePluralName}/find-${table.kebabCasePluralName}-all.query.ts`,
+          target: `${targetQueriesImplementsPath}/${table.kebabCasePluralName}/find-all-${table.kebabCasePluralName}.query.ts`,
           props: {
             projectName,
             table
