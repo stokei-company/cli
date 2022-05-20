@@ -22,7 +22,7 @@ module.exports = (toolbox: Toolbox) => {
         }
       });
     } catch (error) {
-      toolbox.print.error(error);
+      toolbox.print.error(error?.message);
       return exit(0);
     }
   };

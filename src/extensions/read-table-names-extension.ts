@@ -14,7 +14,7 @@ module.exports = (toolbox: Toolbox) => {
         const { singularName } = await prompt.ask({
           type: 'input',
           name: 'singularName',
-          message: 'Qual o nome da entidade no SINGULAR?'
+          message: 'What is the Entity SINGULAR name?'
         });
 
         if (!singularName?.trim()?.toLowerCase()) {
@@ -25,7 +25,7 @@ module.exports = (toolbox: Toolbox) => {
         const { pluralName } = await prompt.ask({
           type: 'input',
           name: 'pluralName',
-          message: 'Qual o nome da entidade no PLURAL (Opicional)?'
+          message: 'What is the Entity PLURAL name (Opicional)?'
         });
         if (singularName) {
           tableNames = [
@@ -40,7 +40,7 @@ module.exports = (toolbox: Toolbox) => {
       }
 
       if (!tableNames?.length) {
-        print.error('Você cancelou o comando sem nenhuma entidade!');
+        print.error('You canceled the command without entities!');
         return exit(0);
       }
       const tables: Table[] = tableNames.map(({ singularName, pluralName }) =>

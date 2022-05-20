@@ -23,7 +23,7 @@ module.exports = (toolbox: Toolbox) => {
       const { projectName } = await prompt.ask({
         type: 'input',
         name: 'projectName',
-        message: 'Qual o nome do projeto?'
+        message: 'What is the project name?'
       });
       if (!projectName) {
         print.error('Project name not found!');

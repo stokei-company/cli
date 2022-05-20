@@ -7,6 +7,7 @@ export interface Toolbox extends GluegunToolbox {
   readProjectName: () => Promise<StringConverted>;
   readTableNames: () => Promise<Table[]>;
   convertString: (singular: string, plural?: string) => StringConverted;
+  generateProjectFolder: (data: GenerateNestJSConfig) => Promise<void>;
   generateNestJSConfigFiles: (data: GenerateNestJSConfig) => Promise<void>;
   generateNestJSCommands: (data: GenerateNestJSConfig) => Promise<void>;
   generateNestJSControllers: (data: GenerateNestJSConfig) => Promise<void>;

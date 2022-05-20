@@ -1,19 +1,26 @@
 import { GluegunCommand } from 'gluegun';
+import { resolve } from 'path';
 import { exit } from 'process';
 import { Toolbox } from '../interfaces/toolbox.interface';
 
 const command: GluegunCommand = {
   name: 'generate:nestjs',
-  alias: ['gnestjs'],
+  alias: ['gnestjs', 'gn'],
+  description:
+    'Comando para gerar um crud de um Microserviço com o padrão CQRS em NestJS',
   run: async (toolbox: Toolbox) => {
     try {
       const projectName = await toolbox.readProjectName();
       if (!projectName) {
-        toolbox.print.error('Project name not found!');
+        toolbox.print.error('Nome do projeto não encontrado!');
         return exit(0);
       }
       const tables = await toolbox.readTableNames();
 
+      const timer = toolbox.system.startTimer();
+
+      toolbox.print.info('Criando arquivos...');
+      await toolbox.generateProjectFolder({ projectName, tables });
       await toolbox.generateNestJSConfigFiles({ projectName, tables });
       await toolbox.generateNestJSCommands({ projectName, tables });
       await toolbox.generateNestJSControllers({ projectName, tables });
@@ -33,18 +40,23 @@ const command: GluegunCommand = {
       await toolbox.generateNestJSSagas({ projectName, tables });
       await toolbox.generateNestJSServices({ projectName, tables });
 
-      /*
+      const projectPath = resolve(projectName.kebabCasePluralName);
+
       toolbox.print.info('Installing dependencies...');
-      await toolbox.system.exec('npm i');
+      await toolbox.system.run('cd ' + projectPath + '; npm i', { trim: true });
 
       toolbox.print.info('Formatting code...');
-      await toolbox.system.exec('npm run format');
-      await toolbox.system.exec('npm run lint');
-      */
-      toolbox.print.success('Command is finished!');
+      await toolbox.system.run('cd ' + projectPath + '; npm run format', {
+        trim: true
+      });
+      await toolbox.system.run('cd ' + projectPath + '; npm run lint', {
+        trim: true
+      });
+      const timeInSeconds = (timer() * 1000).toFixed(2);
+      toolbox.print.success(`Command finished in ${timeInSeconds}s!`);
     } catch (error) {
       toolbox.print.error(error.message);
-      toolbox.print.error('Ocorreu um erro na execução do comando!');
+      toolbox.print.error('An error ocurred!');
     }
   }
 };
