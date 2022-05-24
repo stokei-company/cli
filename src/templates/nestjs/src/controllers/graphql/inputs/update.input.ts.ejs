@@ -9,7 +9,7 @@ export class UpdateData<%= props.table.pascalCaseSingularName %>Input {
 @InputType()
 export class UpdateWhere<%= props.table.pascalCaseSingularName %>Input {
   @Field()
-  name: string;
+  <%= props.table.camelCaseSingularName %>Id: string;
 }
 
 @InputType()

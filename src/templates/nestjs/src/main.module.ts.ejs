@@ -28,7 +28,7 @@ import { Services } from './services';
     ...Entities,
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
-      playground: false,
+      playground: !IS_PRODUCTION,
       debug: !IS_PRODUCTION,
       autoSchemaFile: true,
       buildSchemaOptions: {

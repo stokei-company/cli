@@ -1,4 +1,4 @@
-import { Server<%= props.table.pascalCaseSingularName %>IdPrefix } from '@/enums/server-id-prefix.enum';
+import { Server<%= props.projectName.pascalCaseSingularName %>IdPrefix } from '@/enums/server-id-prefix.enum';
 import { <%= props.table.pascalCaseSingularName %>CreatedEvent } from '@/events/implements/<%= props.table.kebabCasePluralName %>/<%= props.table.kebabCaseSingularName %>-created.event';
 import { <%= props.table.pascalCaseSingularName %>UpdatedEvent } from '@/events/implements/<%= props.table.kebabCasePluralName %>/<%= props.table.kebabCaseSingularName %>-updated.event';
 import { <%= props.table.pascalCaseSingularName %>RemovedEvent } from '@/events/implements/<%= props.table.kebabCasePluralName %>/<%= props.table.kebabCaseSingularName %>-removed.event';
@@ -9,6 +9,7 @@ export interface I<%= props.table.pascalCaseSingularName %>ModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
+  readonly name: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
 }
@@ -16,17 +17,19 @@ export interface I<%= props.table.pascalCaseSingularName %>ModelData {
 export class <%= props.table.pascalCaseSingularName %>Model extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
+  readonly name: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: I<%= props.table.pascalCaseSingularName %>ModelData) {
     super();
 
     this.id = createServiceId({
-      service: Server<%= props.table.pascalCaseSingularName %>IdPrefix.<%= props.table.snakeUpperCasePluralName %>,
-      module: Server<%= props.table.pascalCaseSingularName %>IdPrefix.<%= props.table.snakeUpperCasePluralName %>,
+      service: Server<%= props.projectName.pascalCaseSingularName %>IdPrefix.<%= props.table.snakeUpperCasePluralName %>,
+      module: Server<%= props.projectName.pascalCaseSingularName %>IdPrefix.<%= props.table.snakeUpperCasePluralName %>,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
+    this.name = data.name;
     this.updatedAt = data.updatedAt;
     this.createdAt = data.createdAt;
   }

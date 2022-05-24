@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -18,6 +17,5 @@ model <%= table.pascalCaseSingularName %> {
   createdAt DateTime? @default(now()) @map("created_at")
 
   @@map("<%= table.snakeCasePluralName %>")
-  @@fulltext([name])
 }
 <% }); %>

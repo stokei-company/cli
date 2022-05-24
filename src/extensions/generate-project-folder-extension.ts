@@ -1,3 +1,4 @@
+import { existsSync } from 'fs';
 import { exit } from 'process';
 import { GenerateNestJSConfig } from '../interfaces/generate-command.interface';
 import { Toolbox } from '../interfaces/toolbox.interface';
@@ -7,7 +8,10 @@ module.exports = (toolbox: Toolbox) => {
     projectName
   }: GenerateNestJSConfig) => {
     try {
-      await toolbox.system.run('mkdir ' + projectName.kebabCasePluralName);
+      const existsPath = existsSync(projectName.kebabCasePluralName);
+      if (!existsPath) {
+        await toolbox.system.run('mkdir ' + projectName.kebabCasePluralName);
+      }
     } catch (error) {
       toolbox.print.error(error?.message);
       return exit(0);

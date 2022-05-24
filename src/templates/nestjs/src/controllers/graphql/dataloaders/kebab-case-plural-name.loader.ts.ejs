@@ -7,7 +7,13 @@ export class <%= props.table.pascalCasePluralName %>Loader {
   constructor(private readonly <%= props.table.camelCasePluralName %>Service: FindAll<%= props.table.pascalCasePluralName %>Service) {}
 
   readonly findByIds = new DataLoader(async (<%= props.table.camelCaseSingularName %>Ids: string[]) => {
-    const <%= props.table.camelCasePluralName %> = await this.<%= props.table.camelCasePluralName %>Service.execute(<%= props.table.camelCaseSingularName %>Ids);
+    const <%= props.table.camelCasePluralName %> = await this.<%= props.table.camelCasePluralName %>Service.execute({
+      where:{
+        AND: {
+          ids: <%= props.table.camelCaseSingularName %>Ids,
+        }
+      }
+    });
     const <%= props.table.camelCasePluralName %>Map = new Map(
       <%= props.table.camelCasePluralName %>?.items?.map((<%= props.table.camelCaseSingularName %>) => [<%= props.table.camelCaseSingularName %>.id, <%= props.table.camelCaseSingularName %>])
     );

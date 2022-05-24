@@ -4,7 +4,7 @@ import { <%= table.pascalCasePluralName %>FieldsResolvers } from './<%= table.ke
 
 export const FieldsResolvers = [
 <% props.tables.forEach(function(table){ %>
-  <%= table.pascalCasePluralName %>FieldsResolvers,
+  ...<%= table.pascalCasePluralName %>FieldsResolvers,
 <% }); %>
 ];
   

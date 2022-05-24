@@ -10,9 +10,9 @@ export const IS_DEVELOPMENT: boolean = NODE_ENV === Environment.DEVELOPMENT;
 
 // ---------- SERVER ----------
 export const DB_URL: string = process.env.DB_URL;
-export const HOST: string = process.env.HOST;
-export const PORT: number = +process.env.PORT;
-export const URL: string = process.env.URL;
+export const HOST: string = process.env.HOST || 'localhost';
+export const PORT: number = +process.env.PORT || 3000;
+export const URL: string = process.env.URL || `http://${HOST}:${PORT}`;
 
 export const MICROSERVICE_URL: string = process.env.MICROSERVICE_URL;
 

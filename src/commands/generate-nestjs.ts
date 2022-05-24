@@ -1,5 +1,4 @@
 import { GluegunCommand } from 'gluegun';
-import { resolve } from 'path';
 import { exit } from 'process';
 import { Toolbox } from '../interfaces/toolbox.interface';
 
@@ -40,19 +39,7 @@ const command: GluegunCommand = {
       await toolbox.generateNestJSSagas({ projectName, tables });
       await toolbox.generateNestJSServices({ projectName, tables });
 
-      const projectPath = resolve(projectName.kebabCasePluralName);
-
-      toolbox.print.info('Installing dependencies...');
-      await toolbox.system.run('cd ' + projectPath + '; npm i', { trim: true });
-
-      toolbox.print.info('Formatting code...');
-      await toolbox.system.run('cd ' + projectPath + '; npm run format', {
-        trim: true
-      });
-      await toolbox.system.run('cd ' + projectPath + '; npm run lint', {
-        trim: true
-      });
-      const timeInSeconds = (timer() * 1000).toFixed(2);
+      const timeInSeconds = (timer() / 1000).toFixed(2);
       toolbox.print.success(`Command finished in ${timeInSeconds}s!`);
     } catch (error) {
       toolbox.print.error(error.message);

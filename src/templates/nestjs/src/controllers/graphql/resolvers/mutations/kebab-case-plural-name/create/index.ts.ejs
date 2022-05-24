@@ -16,10 +16,7 @@ export class Create<%= props.table.pascalCaseSingularName %>Resolver {
     @Args('input') data: Create<%= props.table.pascalCaseSingularName %>Input,
     @CurrentProject('id') projectId: string
   ) {
-    const response = await this.create<%= props.table.pascalCaseSingularName %>Service.execute({
-      ...data,
-      parent: projectId
-    });
+    const response = await this.create<%= props.table.pascalCaseSingularName %>Service.execute(data);
     return response;
   }
 }

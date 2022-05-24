@@ -9,7 +9,7 @@ export class RemoveData<%= props.table.pascalCaseSingularName %>Input {
 @InputType()
 export class RemoveWhere<%= props.table.pascalCaseSingularName %>Input {
   @Field()
-  parent: string;
+  <%= props.table.camelCaseSingularName %>Id: string;
 }
 
 @InputType()
