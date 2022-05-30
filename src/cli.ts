@@ -1,5 +1,4 @@
 import { build } from 'gluegun';
-import * as packageJson from '../package.json';
 import { CLI_COMMAND_NAME } from './constants/info';
 
 async function run(argv) {
@@ -11,7 +10,8 @@ async function run(argv) {
       hidden: true
     })
     .help()
-    .version(packageJson.version)
+    .version()
+    .defaultCommand()
     .create();
   const toolbox = await cli.run(argv);
   return toolbox;
