@@ -1,7 +1,16 @@
-export const getBaseProjectPath = (projectName: string) => projectName;
-export const getBaseProjectSrcPath = (projectName: string) =>
-  projectName + '/src';
-export const getBaseProjectTestPath = (projectName: string) =>
-  projectName + '/test';
-export const getBaseProjectGithubWorkflowsPath = (projectName: string) =>
-  projectName + '/.github/workflows';
+export const getBaseProjectPath = (
+  projectName: string,
+  isRootRepository?: boolean
+) => (isRootRepository ? '.' : projectName);
+export const getBaseProjectSrcPath = (
+  projectName: string,
+  isRootRepository?: boolean
+) => getBaseProjectPath(projectName, isRootRepository) + '/src';
+export const getBaseProjectTestPath = (
+  projectName: string,
+  isRootRepository?: boolean
+) => getBaseProjectPath(projectName, isRootRepository) + '/test';
+export const getBaseProjectGithubWorkflowsPath = (
+  projectName: string,
+  isRootRepository?: boolean
+) => getBaseProjectPath(projectName, isRootRepository) + '/.github/workflows';

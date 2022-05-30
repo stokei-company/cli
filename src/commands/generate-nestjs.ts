@@ -9,7 +9,7 @@ const command: GluegunCommand = {
     'Comando para gerar um crud de um Microserviço com o padrão CQRS em NestJS',
   run: async (toolbox: Toolbox) => {
     try {
-      const projectName = await toolbox.readProjectName();
+      const { projectName, isRootRepository } = await toolbox.readProjectName();
       if (!projectName) {
         toolbox.print.error('Nome do projeto não encontrado!');
         return exit(0);
@@ -19,25 +19,96 @@ const command: GluegunCommand = {
       const timer = toolbox.system.startTimer();
 
       toolbox.print.info('Criando arquivos...');
-      await toolbox.generateProjectFolder({ projectName, tables });
-      await toolbox.generateNestJSConfigFiles({ projectName, tables });
-      await toolbox.generateNestJSCommands({ projectName, tables });
-      await toolbox.generateNestJSControllers({ projectName, tables });
-      await toolbox.generateNestJSDatabese({ projectName, tables });
-      await toolbox.generateNestJSDTOs({ projectName, tables });
-      await toolbox.generateNestJSEntities({ projectName, tables });
-      await toolbox.generateNestJSEnums({ projectName, tables });
-      await toolbox.generateNestJSEnvironments({ projectName, tables });
-      await toolbox.generateNestJSErrors({ projectName, tables });
-      await toolbox.generateNestJSEvents({ projectName, tables });
-      await toolbox.generateNestJSInterfaces({ projectName, tables });
-      await toolbox.generateNestJSMappers({ projectName, tables });
-      await toolbox.generateNestJSMocks({ projectName, tables });
-      await toolbox.generateNestJSModels({ projectName, tables });
-      await toolbox.generateNestJSQueries({ projectName, tables });
-      await toolbox.generateNestJSRepositories({ projectName, tables });
-      await toolbox.generateNestJSSagas({ projectName, tables });
-      await toolbox.generateNestJSServices({ projectName, tables });
+      await toolbox.generateNestJSConfigFiles({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSCommands({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSControllers({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSDatabese({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSDTOs({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSEntities({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSEnums({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSEnvironments({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSErrors({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSEvents({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSInterfaces({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSMappers({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSMocks({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSModels({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSQueries({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSRepositories({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSSagas({
+        isRootRepository,
+        projectName,
+        tables
+      });
+      await toolbox.generateNestJSServices({
+        isRootRepository,
+        projectName,
+        tables
+      });
 
       const timeInSeconds = (timer() / 1000).toFixed(2);
       toolbox.print.success(`Command finished in ${timeInSeconds}s!`);

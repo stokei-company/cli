@@ -7,7 +7,7 @@ import {
 } from '@/errors';
 import { Find<%= props.table.pascalCaseSingularName %>ByIdRepository } from '@/repositories/<%= props.table.kebabCasePluralName %>/find-<%= props.table.kebabCaseSingularName %>-by-id';
 import { Update<%= props.table.pascalCaseSingularName %>Repository } from '@/repositories/<%= props.table.kebabCasePluralName %>/update-<%= props.table.kebabCaseSingularName %>';
-import { cleanObject, splitServiceId } from '@stokei/nestjs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type Update<%= props.table.pascalCaseSingularName %>CommandKeys = keyof Update<%= props.table.pascalCaseSingularName %>Command;
 
@@ -59,6 +59,13 @@ export class Update<%= props.table.pascalCaseSingularName %>CommandHandler
   }
 
   private clearData(command: Update<%= props.table.pascalCaseSingularName %>Command): Update<%= props.table.pascalCaseSingularName %>Command {
-    return cleanObject(command);
+    return cleanObject({
+      where: cleanObject({
+        <%= props.table.camelCaseSingularName %>Id: cleanValue(command?.where?.<%= props.table.camelCaseSingularName %>Id)
+      }),
+      data: cleanObject({
+        name: cleanValue(command?.data?.name)
+      })
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { <%= props.table.pascalCasePluralName %>Loader } from '@/controllers/graphql/dataloaders/<%= props.table.kebabCasePluralName %>.loader';
 import { <%= props.table.pascalCaseSingularName %> } from '@/controllers/graphql/types/<%= props.table.kebabCaseSingularName %>';
+import { <%= props.table.pascalCaseSingularName %>NotFoundException, ParamNotFoundException } from '@/errors';
 
 @Resolver(() => <%= props.table.pascalCaseSingularName %>)
 export class <%= props.table.pascalCaseSingularName %>Resolver {
@@ -8,6 +9,13 @@ export class <%= props.table.pascalCaseSingularName %>Resolver {
 
   @Query(() => <%= props.table.pascalCaseSingularName %>)
   async <%= props.table.camelCaseSingularName %>(@Args('id') id: string) {
-    return await this.<%= props.table.camelCasePluralName %>Loader.findByIds.load(id);
+    if (!id) {
+      throw new ParamNotFoundException('id');
+    }
+    const <%= props.table.camelCaseSingularName %> = await this.<%= props.table.camelCasePluralName %>Loader.findByIds.load(id);
+    if (!<%= props.table.camelCaseSingularName %>) {
+      throw new <%= props.table.pascalCaseSingularName %>NotFoundException();
+    }
+    return <%= props.table.camelCaseSingularName %>;
   }
 }

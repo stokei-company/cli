@@ -1,13 +1,13 @@
 import { GluegunToolbox } from 'gluegun';
 import { GenerateNestJSConfig } from './generate-command.interface';
+import { ReadProjectName } from './project.interface';
 import { StringConverted } from './strings.interface';
 import { Table } from './tables.interface';
 
 export interface Toolbox extends GluegunToolbox {
-  readProjectName: () => Promise<StringConverted>;
+  readProjectName: () => Promise<ReadProjectName>;
   readTableNames: () => Promise<Table[]>;
   convertString: (singular: string, plural?: string) => StringConverted;
-  generateProjectFolder: (data: GenerateNestJSConfig) => Promise<void>;
   generateNestJSConfigFiles: (data: GenerateNestJSConfig) => Promise<void>;
   generateNestJSCommands: (data: GenerateNestJSConfig) => Promise<void>;
   generateNestJSControllers: (data: GenerateNestJSConfig) => Promise<void>;

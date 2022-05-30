@@ -7,6 +7,9 @@ import { OrderBy, WhereDataStringInput, WhereDataSearchInput, WherePaginated } f
 
 @InputType()
 class WhereDataFindAll<%= props.table.pascalCasePluralName %>DataInput implements WhereDataFindAll<%= props.table.pascalCasePluralName %>DTO {
+  @Field(() => [String], { nullable: true })
+  ids?: string[];
+
   @Field({ nullable: true })
   parent?: WhereDataStringInput;
   

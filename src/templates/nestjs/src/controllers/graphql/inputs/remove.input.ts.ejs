@@ -1,12 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
-export class RemoveData<%= props.table.pascalCaseSingularName %>Input {
-  @Field()
-  parent: string;
-}
-
-@InputType()
 export class RemoveWhere<%= props.table.pascalCaseSingularName %>Input {
   @Field()
   <%= props.table.camelCaseSingularName %>Id: string;
@@ -14,9 +8,6 @@ export class RemoveWhere<%= props.table.pascalCaseSingularName %>Input {
 
 @InputType()
 export class Remove<%= props.table.pascalCaseSingularName %>Input {
-  @Field(() => RemoveData<%= props.table.pascalCaseSingularName %>Input)
-  data: RemoveData<%= props.table.pascalCaseSingularName %>Input;
-  
   @Field(() => RemoveWhere<%= props.table.pascalCaseSingularName %>Input)
   where: RemoveWhere<%= props.table.pascalCaseSingularName %>Input;
 }

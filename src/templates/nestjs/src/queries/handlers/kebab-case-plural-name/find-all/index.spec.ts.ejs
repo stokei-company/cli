@@ -1,3 +1,4 @@
+import { Count<%= props.table.pascalCasePluralName %>Repository } from '@/repositories/<%= props.table.kebabCasePluralName %>/count-<%= props.table.kebabCasePluralName %>';
 import { FindAll<%= props.table.pascalCasePluralName %>Repository } from '@/repositories/<%= props.table.kebabCasePluralName %>/find-all-<%= props.table.kebabCasePluralName %>';
 import { Test } from '@nestjs/testing';
 import { FindAll<%= props.table.pascalCasePluralName %>QueryHandler } from '.';
@@ -12,6 +13,12 @@ describe('FindAll<%= props.table.pascalCasePluralName %>QueryHandler', () => {
       providers: [
         {
           provide: FindAll<%= props.table.pascalCasePluralName %>Repository,
+          useValue: {
+            execute: jest.fn()
+          }
+        },
+        {
+          provide: Count<%= props.table.pascalCasePluralName %>Repository,
           useValue: {
             execute: jest.fn()
           }

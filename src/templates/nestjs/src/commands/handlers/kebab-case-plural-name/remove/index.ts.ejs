@@ -7,7 +7,7 @@ import {
 } from '@/errors';
 import { Find<%= props.table.pascalCaseSingularName %>ByIdRepository } from '@/repositories/<%= props.table.kebabCasePluralName %>/find-<%= props.table.kebabCaseSingularName %>-by-id';
 import { Remove<%= props.table.pascalCaseSingularName %>Repository } from '@/repositories/<%= props.table.kebabCasePluralName %>/remove-<%= props.table.kebabCaseSingularName %>';
-import { cleanObject, splitServiceId } from '@stokei/nestjs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type Remove<%= props.table.pascalCaseSingularName %>CommandKeys = keyof Remove<%= props.table.pascalCaseSingularName %>Command;
 
@@ -52,6 +52,10 @@ export class Remove<%= props.table.pascalCaseSingularName %>CommandHandler
   }
 
   private clearData(command: Remove<%= props.table.pascalCaseSingularName %>Command): Remove<%= props.table.pascalCaseSingularName %>Command {
-    return cleanObject(command);
+    return cleanObject({
+      where: cleanObject({
+        <%= props.table.camelCaseSingularName %>Id: cleanValue(command?.where?.<%= props.table.camelCaseSingularName %>Id)
+      })
+    });
   }
 }

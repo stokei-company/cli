@@ -1,7 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@/database/prisma/client';
-import { Count<%= props.table.pascalCasePluralName %>DTO } from '@/dtos/<%= props.table.kebabCasePluralName %>/count-<%= props.table.kebabCasePluralName %>.dto';
-import { IBaseRepository } from '@stokei/nestjs';
+import {
+  Count<%= props.table.pascalCasePluralName %>DTO,
+  Count<%= props.table.pascalCasePluralName %>WhereDTO
+} from '@/dtos/<%= props.table.kebabCasePluralName %>/count-<%= props.table.kebabCasePluralName %>.dto';
+import {
+  IBaseRepository,
+  PrismaMapper,
+  IOperator,
+  IWhere
+} from '@stokei/nestjs';
 
 @Injectable()
 export class Count<%= props.table.pascalCasePluralName %>Repository
@@ -10,6 +18,24 @@ export class Count<%= props.table.pascalCasePluralName %>Repository
   constructor(private readonly model: PrismaClient) {}
 
   async execute({ where }: Count<%= props.table.pascalCasePluralName %>DTO): Promise<number> {
-    return await this.model.<%= props.table.camelCaseSingularName %>.count({ where });
+    const prismaMapper = new PrismaMapper();
+    const mapFromDTOOperatorDataToPrismaOperatorData = (operator: IOperator) => {
+      const operatorData = where?.[operator];
+      if (!operatorData) {
+        return null;
+      }
+      return {
+        id: prismaMapper.toWhereIds(operatorData.ids),
+        name: prismaMapper.toWhereDataSearch(operatorData.name),
+        parent: prismaMapper.toWhereData(operatorData.parent)
+      };
+    };
+    return await this.model.<%= props.table.camelCaseSingularName %>.count({
+      where: prismaMapper.toWhere<IWhere<Count<%= props.table.pascalCasePluralName %>WhereDTO>>({
+        AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
+        OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
+        NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      }),
+    });
   }
 }

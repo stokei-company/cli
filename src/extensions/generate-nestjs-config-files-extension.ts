@@ -10,20 +10,25 @@ import { Toolbox } from '../interfaces/toolbox.interface';
 
 module.exports = (toolbox: Toolbox) => {
   toolbox.generateNestJSConfigFiles = async ({
-    projectName
+    projectName,
+    isRootRepository
   }: GenerateNestJSConfig) => {
     try {
       const baseProjectPath = getBaseProjectPath(
-        projectName.kebabCasePluralName
+        projectName.kebabCasePluralName,
+        isRootRepository
       );
       const baseProjectTestPath = getBaseProjectTestPath(
-        projectName.kebabCasePluralName
+        projectName.kebabCasePluralName,
+        isRootRepository
       );
       const baseProjectSrcPath = getBaseProjectSrcPath(
-        projectName.kebabCasePluralName
+        projectName.kebabCasePluralName,
+        isRootRepository
       );
       const baseProjectGithubWorkgflowsPath = getBaseProjectGithubWorkflowsPath(
-        projectName.kebabCasePluralName
+        projectName.kebabCasePluralName,
+        isRootRepository
       );
 
       await toolbox.template.generate({

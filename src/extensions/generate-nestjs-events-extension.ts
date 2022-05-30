@@ -6,11 +6,13 @@ import { Toolbox } from '../interfaces/toolbox.interface';
 module.exports = (toolbox: Toolbox) => {
   toolbox.generateNestJSEvents = async ({
     projectName,
+    isRootRepository,
     tables
   }: GenerateNestJSConfig) => {
     try {
       const baseProjectSrcPath = getBaseProjectSrcPath(
-        projectName.kebabCasePluralName
+        projectName.kebabCasePluralName,
+        isRootRepository
       );
       const templateEventHandlersPath = `nestjs/src/events/handlers`;
       const templateEventImplementsPath = `nestjs/src/events/implements`;

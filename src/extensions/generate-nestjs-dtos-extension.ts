@@ -6,11 +6,13 @@ import { Toolbox } from '../interfaces/toolbox.interface';
 module.exports = (toolbox: Toolbox) => {
   toolbox.generateNestJSDTOs = async ({
     projectName,
+    isRootRepository,
     tables
   }: GenerateNestJSConfig) => {
     try {
       const baseProjectSrcPath = getBaseProjectSrcPath(
-        projectName.kebabCasePluralName
+        projectName.kebabCasePluralName,
+        isRootRepository
       );
 
       tables.forEach(async (table) => {

@@ -1,7 +1,10 @@
-import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
+import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 
 export interface Count<%= props.table.pascalCasePluralName %>WhereDTO {
+  ids?: string[];
   parent?: IWhereData;
+  name?: IWhereDataSearch;
 }
+export type IKeysCount<%= props.table.pascalCasePluralName %>WhereDTO = keyof Count<%= props.table.pascalCasePluralName %>WhereDTO;
 
 export type Count<%= props.table.pascalCasePluralName %>DTO = IBaseCountDTO<Count<%= props.table.pascalCasePluralName %>WhereDTO>;

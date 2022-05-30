@@ -6,7 +6,10 @@ import {
   cleanObject,
   cleanSortValue,
   cleanValueNumber,
-  cleanWhereDataString
+  cleanWhereDataString,
+  cleanWhereDataSearch,
+  cleanValue,
+  splitServiceId
 } from '@stokei/nestjs';
 import { DataNotFoundException } from '@/errors';
 import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
@@ -53,7 +56,12 @@ export class FindAll<%= props.table.pascalCasePluralName %>QueryHandler
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent)
+          parent: cleanWhereDataString(operatorData.parent),
+          name: cleanWhereDataSearch(operatorData.name),
+          ids:
+            operatorData.ids?.length > 0
+              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
+              : undefined
         }
       };
     };
@@ -69,6 +77,7 @@ export class FindAll<%= props.table.pascalCasePluralName %>QueryHandler
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
+        name: cleanSortValue(query.orderBy?.name),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt)
       })
