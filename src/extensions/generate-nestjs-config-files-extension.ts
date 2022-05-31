@@ -32,6 +32,13 @@ module.exports = (toolbox: Toolbox) => {
       );
 
       await toolbox.template.generate({
+        template: 'nestjs/.dockerignore.ejs',
+        target: `${baseProjectPath}/.dockerignore`,
+        props: {
+          projectName
+        }
+      });
+      await toolbox.template.generate({
         template: 'nestjs/.editorconfig.ejs',
         target: `${baseProjectPath}/.editorconfig`,
         props: {
