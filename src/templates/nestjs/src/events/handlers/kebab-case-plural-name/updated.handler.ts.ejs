@@ -7,8 +7,8 @@ export class <%= props.table.pascalCaseSingularName %>UpdatedHandler
   implements IEventHandler<<%= props.table.pascalCaseSingularName %>UpdatedEvent>
 {
   async handle(event: <%= props.table.pascalCaseSingularName %>UpdatedEvent) {
-    const { <%= props.table.camelCaseSingularName %>Id } = event;
-    Logger.log(`#${<%= props.table.camelCaseSingularName %>Id} - updated!`, <%= props.table.pascalCaseSingularName %>UpdatedHandler.name);
+    const { <%= props.table.camelCaseSingularName %>.id } = event;
+    Logger.log(`#${<%= props.table.camelCaseSingularName %>.id} - updated!`, <%= props.table.pascalCaseSingularName %>UpdatedHandler.name);
     return event;
   }
 }

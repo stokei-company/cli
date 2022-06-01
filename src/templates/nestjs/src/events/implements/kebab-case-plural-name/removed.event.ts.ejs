@@ -1,11 +1,13 @@
+import { <%= props.table.pascalCaseSingularName %>Model } from '@/models/<%= props.table.kebabCaseSingularName %>.model';
+
 interface IData<%= props.table.pascalCaseSingularName %>RemovedEvent {
-  readonly <%= props.table.camelCaseSingularName %>Id: string;
+  readonly <%= props.table.camelCaseSingularName %>: <%= props.table.pascalCaseSingularName %>Model;
 }
 
 export class <%= props.table.pascalCaseSingularName %>RemovedEvent {
-  readonly <%= props.table.camelCaseSingularName %>Id: string;
+  readonly <%= props.table.camelCaseSingularName %>: <%= props.table.pascalCaseSingularName %>Model;
 
   constructor(data: IData<%= props.table.pascalCaseSingularName %>RemovedEvent) {
-    this.<%= props.table.camelCaseSingularName %>Id = data.<%= props.table.camelCaseSingularName %>Id;
+    this.<%= props.table.camelCaseSingularName %> = data.<%= props.table.camelCaseSingularName %>;
   }
 }

@@ -38,7 +38,7 @@ export class <%= props.table.pascalCaseSingularName %>Model extends AggregateRoo
     if (this.id) {
       this.apply(
         new <%= props.table.pascalCaseSingularName %>CreatedEvent({
-          <%= props.table.camelCaseSingularName %>Id: this.id
+          <%= props.table.camelCaseSingularName %>: this
         })
       );
     }
@@ -48,7 +48,7 @@ export class <%= props.table.pascalCaseSingularName %>Model extends AggregateRoo
     if (this.id) {
       this.apply(
         new <%= props.table.pascalCaseSingularName %>UpdatedEvent({
-          <%= props.table.camelCaseSingularName %>Id: this.id
+          <%= props.table.camelCaseSingularName %>: this
         })
       );
     }
@@ -58,7 +58,7 @@ export class <%= props.table.pascalCaseSingularName %>Model extends AggregateRoo
     if (this.id) {
       this.apply(
         new <%= props.table.pascalCaseSingularName %>RemovedEvent({
-          <%= props.table.camelCaseSingularName %>Id: this.id
+          <%= props.table.camelCaseSingularName %>: this
         })
       );
     }
