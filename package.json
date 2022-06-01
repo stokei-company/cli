@@ -2,7 +2,7 @@
   "name": "@stokei/cli",
   "version": "1.0.0",
   "description": "Stokei CLI",
-  "private": true,
+  "private": false,
   "types": "build/types/types.d.ts",
   "bin": {
     "stokeicli": "bin/stokeicli"
