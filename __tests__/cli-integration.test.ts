@@ -6,6 +6,7 @@ const cli = async (cmd) =>
   system.run('node ' + filesystem.path(src, 'bin', 'stokeicli') + ` ${cmd}`);
 
 describe('StokeiCLI', () => {
+  jest.setTimeout(10000);
   it('outputs version', async () => {
     const output = await cli('--version');
     expect(output).toContain('1.0.0');
