@@ -7,7 +7,7 @@ export class <%= props.table.pascalCaseSingularName %>RemovedHandler
   implements IEventHandler<<%= props.table.pascalCaseSingularName %>RemovedEvent>
 {
   async handle(event: <%= props.table.pascalCaseSingularName %>RemovedEvent) {
-    const { <%= props.table.camelCaseSingularName %>.id } = event;
+    const { <%= props.table.camelCaseSingularName %> } = event;
     Logger.log(`#${<%= props.table.camelCaseSingularName %>.id} - removed!`, <%= props.table.pascalCaseSingularName %>RemovedHandler.name);
     return event;
   }
