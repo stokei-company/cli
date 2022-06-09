@@ -74,6 +74,13 @@ module.exports = (toolbox: Toolbox) => {
         }
       });
       await toolbox.template.generate({
+        template: 'nestjs/.prettierignore.ejs',
+        target: `${baseProjectPath}/.prettierignore`,
+        props: {
+          projectName
+        }
+      });
+      await toolbox.template.generate({
         template: 'nestjs/docker-compose.yml.ejs',
         target: `${baseProjectPath}/docker-compose.yml`,
         props: {
